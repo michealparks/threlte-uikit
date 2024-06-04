@@ -8,7 +8,9 @@ npm i threlte-uikit
 
 ## Getting started
 
-`threlte-uikit` should feel very similar to the [React flavor](https://docs.pmnd.rs/uikit/getting-started/introduction). As with the vanilla version, however, a small amount of setup to your main scene must happen:
+`threlte-uikit` should feel very similar to the [React flavor](https://docs.pmnd.rs/uikit/getting-started/introduction).
+
+As with the vanilla version, however, a small amount of setup to your main scene must happen:
 
 ```svelte
 <script>
