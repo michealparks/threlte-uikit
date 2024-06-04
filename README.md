@@ -6,7 +6,7 @@ npm i threlte-uikit
 
 ```svelte
 <script>
-  import { T } from '@threlte/core
+  import { T } from '@threlte/core'
   import { Root, Container, Text } from 'threlte-uikit'
 </script>
 
