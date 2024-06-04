@@ -38,10 +38,8 @@ As with the [vanilla version](https://github.com/pmndrs/uikit/tree/main/packages
 
 The vanilla object may be accessed via the `ref` property.
 
-````svelte
-<Container bind:ref>
-  ...
-</Container>
+```svelte
+<Container bind:ref>...</Container>
 ```
 
 ## Components
@@ -64,7 +62,7 @@ Allows overriding the default properties for all UIKit components and children c
 createDefaultProperties({
   margin: 10,
 })
-````
+```
 
 - `createFontFamilies()`
 
