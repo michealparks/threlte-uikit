@@ -1,26 +1,27 @@
 <script lang="ts">
-	import { Text } from '@pmndrs/uikit'
-	import Base from './Base.svelte'
-	import { signal } from '@preact/signals-core'
-	import type { EventHandlers, InheritableTextProperties } from '@pmndrs/uikit/internals'
-	import { useDefaultProperties } from '$lib/useDefaultProperties'
+  import { Text } from '@pmndrs/uikit'
+  import Base from './Base.svelte'
+  import { signal } from '@preact/signals-core'
+  import type { EventHandlers, InheritableTextProperties } from '@pmndrs/uikit/internals'
+  import { useDefaultProperties } from '$lib/useDefaultProperties'
 
-	type $$Props = {
-		text: string
-		name?: string
-	} & InheritableTextProperties &
-		EventHandlers
+  type $$Props = {
+    text: string
+    name?: string
+    ref?: Text
+  } & InheritableTextProperties &
+    EventHandlers
 
-	export let text: $$Props['text']
+  export let text: $$Props['text']
 
-	const defaultProperties = useDefaultProperties()
-	const textSignal = signal(text)
-	const is = new Text(textSignal, $$restProps, defaultProperties)
+  const defaultProperties = useDefaultProperties()
+  const textSignal = signal(text)
+  export const ref = new Text(textSignal, $$restProps, defaultProperties)
 
-	$: textSignal.value = text
+  $: textSignal.value = text
 </script>
 
 <Base
-	{is}
-	{...$$restProps}
+  is={ref}
+  {...$$restProps}
 />

@@ -1,23 +1,24 @@
 <script lang="ts">
-	import type { Texture } from 'three'
-	import { Image } from '@pmndrs/uikit'
-	import Base from './Base.svelte'
-	import type { EventHandlers, InheritableImageProperties } from '@pmndrs/uikit/internals'
-	import { useDefaultProperties } from '$lib/useDefaultProperties'
+  import type { Texture } from 'three'
+  import { Image } from '@pmndrs/uikit'
+  import Base from './Base.svelte'
+  import type { EventHandlers, InheritableImageProperties } from '@pmndrs/uikit/internals'
+  import { useDefaultProperties } from '$lib/useDefaultProperties'
 
-	type $$Props = {
-		src?: string | Texture
-		name?: string
-	} & InheritableImageProperties &
-		EventHandlers
+  type $$Props = {
+    src?: string | Texture
+    name?: string
+    ref?: Image
+  } & InheritableImageProperties &
+    EventHandlers
 
-	const defaultProperties = useDefaultProperties()
-	const is = new Image($$restProps, defaultProperties)
+  const defaultProperties = useDefaultProperties()
+  export const ref = new Image($$restProps, defaultProperties)
 </script>
 
 <Base
-	{is}
-	{...$$restProps}
+  is={ref}
+  {...$$restProps}
 >
-	<slot />
+  <slot />
 </Base>

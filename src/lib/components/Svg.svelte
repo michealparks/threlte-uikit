@@ -1,18 +1,22 @@
 <script lang="ts">
-	import { Svg } from '@pmndrs/uikit'
-	import Base from './Base.svelte'
-	import type { EventHandlers, InheritableContainerProperties } from '@pmndrs/uikit/internals'
-	import { useDefaultProperties } from '$lib/useDefaultProperties'
+  import { Svg } from '@pmndrs/uikit'
+  import Base from './Base.svelte'
+  import type { EventHandlers, InheritableContainerProperties } from '@pmndrs/uikit/internals'
+  import { useDefaultProperties } from '$lib/useDefaultProperties'
 
-	type $$Props = { name?: string } & InheritableContainerProperties & EventHandlers
+  type $$Props = {
+    name?: string
+    ref?: Svg
+  } & InheritableContainerProperties &
+    EventHandlers
 
-	const defaultProperties = useDefaultProperties()
-	const is = new Svg($$restProps, defaultProperties)
+  const defaultProperties = useDefaultProperties()
+  export const ref = new Svg($$restProps, defaultProperties)
 </script>
 
 <Base
-	{is}
-	{...$$restProps}
+  is={ref}
+  {...$$restProps}
 >
-	<slot />
+  <slot />
 </Base>
