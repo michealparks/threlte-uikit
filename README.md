@@ -36,6 +36,14 @@ As with the [vanilla version](https://github.com/pmndrs/uikit/tree/main/packages
 </T.Group>
 ```
 
+The vanilla object may be accessed via the `ref` property.
+
+````svelte
+<Container bind:ref>
+  ...
+</Container>
+```
+
 ## Components
 
 - [Container](https://docs.pmnd.rs/uikit/getting-started/components-and-properties#container)
@@ -45,7 +53,6 @@ As with the [vanilla version](https://github.com/pmndrs/uikit/tree/main/packages
 - [Text](https://docs.pmnd.rs/uikit/getting-started/components-and-properties#text)
 - [SVG](https://docs.pmnd.rs/uikit/getting-started/components-and-properties#svg)
 - [Content](https://docs.pmnd.rs/uikit/getting-started/components-and-properties#content)
-- [CustomContainer](https://docs.pmnd.rs/uikit/getting-started/components-and-properties#customcontainer)
 
 ## Context providers
 
@@ -57,7 +64,7 @@ Allows overriding the default properties for all UIKit components and children c
 createDefaultProperties({
   margin: 10,
 })
-```
+````
 
 - `createFontFamilies()`
 
