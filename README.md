@@ -11,14 +11,14 @@ npm i threlte-uikit
 </script>
 
 <T.Group>
-	<Root
-		padding={10}
-		backgroundColor="#ccc"
-	>
-		<Container>
-			<Text text="hello uikit!" />
-		</Container>
-	</Root>
+  <Root
+    padding={10}
+    backgroundColor="#ccc"
+  >
+    <Container>
+      <Text text="hello uikit!" />
+    </Container>
+  </Root>
 </T.Group>
 ```
 
@@ -41,7 +41,7 @@ Allows overriding the default properties for all UIKit components and children c
 
 ```ts
 createDefaultProperties({
-	margin: 10,
+  margin: 10,
 })
 ```
 
@@ -51,11 +51,11 @@ Provides new font families to all children. Instructions for creating fonts that
 
 ```ts
 createFontFamilies({
-	roboto: {
-		light: 'url-to-json',
-		medium: 'url-to-json',
-		bold: 'url-to-json',
-	},
+  roboto: {
+    light: 'url-to-json',
+    medium: 'url-to-json',
+    bold: 'url-to-json',
+  },
 })
 ```
 
@@ -65,11 +65,11 @@ Call the Threlte [`interactivity`](https://threlte.xyz/docs/reference/extras/int
 
 ```svelte
 <Container
-	onClick={() => console.log('click')}
-	onPointerEnter={() => console.log('pointer entered')}
-	onPointerLeave={() => console.log('pointer left')}
+  onClick={() => console.log('click')}
+  onPointerEnter={() => console.log('pointer entered')}
+  onPointerLeave={() => console.log('pointer left')}
 >
-	<Text text="I am a button" />
+  <Text text="I am a button" />
 </Container>
 ```
 
@@ -79,6 +79,6 @@ UIKit will set multiple geometries on the same plane. This will result in duplic
 
 ```ts
 interactivity({
-	filter: (hits) => hits.slice(0, 1),
+  filter: (hits) => hits.slice(0, 1),
 })
 ```
