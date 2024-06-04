@@ -1,8 +1,14 @@
 # threlte-uikit
 
+`threlte-uikit` wraps [`@pmndrs/uikit`](https://github.com/pmndrs/uikit) (the vanilla flavor) in a declarative syntax for use with [Threlte](https://threlte.xyz).
+
 ```
 npm i threlte-uikit
 ```
+
+## Getting started
+
+`threlte-uikit` should feel very similar to the [React flavor](https://docs.pmnd.rs/uikit/getting-started/introduction).
 
 ```svelte
 <script>
@@ -74,6 +80,15 @@ Call the Threlte [`interactivity`](https://threlte.xyz/docs/reference/extras/int
 ```
 
 Calling interactivity is necessary for any `hover` or `active` conditional properties to work.
+
+```svelte
+<Container
+  backgroundColor="red"
+  hover={{ backgroundColor: 'purple' }}
+>
+  ...
+</Container>
+```
 
 UIKit will set multiple geometries on the same plane. This will result in duplicate events firing for a single click, hover, etc. unless you filter only the first hit.
 
