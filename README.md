@@ -8,12 +8,18 @@ npm i threlte-uikit
 
 ## Getting started
 
-`threlte-uikit` should feel very similar to the [React flavor](https://docs.pmnd.rs/uikit/getting-started/introduction).
+`threlte-uikit` should feel very similar to the [React flavor](https://docs.pmnd.rs/uikit/getting-started/introduction). As with the vanilla version, however, a small amount of setup to your main scene must happen:
 
 ```svelte
 <script>
-  import { T } from '@threlte/core'
-  import { Root, Container, Text } from 'threlte-uikit'
+  import { T, useThrelte } from '@threlte/core'
+  import { Root, Container, Text, reversePainterSortStable } from 'threlte-uikit'
+
+  const { renderer } = useThrelte()
+
+  // Set local clipping and uikit's sort function.
+  renderer.localClippingEnabled = true
+  renderer.setTransparentSort(reversePainterSortStable)
 </script>
 
 <T.Group>
