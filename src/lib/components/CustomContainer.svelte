@@ -10,8 +10,8 @@
   } & InheritableCustomContainerProperties &
     EventHandlers
 
-  const defaultProperties = useDefaultProperties()
-  export const ref = new CustomContainer($$restProps, defaultProperties)
+  const defaultProps = useDefaultProperties()
+  export const ref = new CustomContainer($$restProps, defaultProps)
 </script>
 
 <Base

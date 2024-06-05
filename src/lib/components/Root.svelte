@@ -14,10 +14,10 @@
     EventHandlers
 
   const { camera, renderer, shouldRender, scheduler, renderStage } = useThrelte()
-  const defaultProperties = useDefaultProperties()
+  const defaultProps = useDefaultProperties()
   const fontFamilies = useFontFamilies()
   const cameraSignal = signal(camera.current)
-  export const ref = new Root(cameraSignal, renderer, $$restProps, defaultProperties, fontFamilies)
+  export const ref = new Root(cameraSignal, renderer, $$restProps, defaultProps, fontFamilies)
 
   $: cameraSignal.value = $camera
 

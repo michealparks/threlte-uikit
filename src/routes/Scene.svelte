@@ -9,18 +9,18 @@
   renderer.setTransparentSort(reversePainterSortStable)
 
   interactivity({
-    filter: (items) => {
-      return items.slice(0, 1)
-    },
+    // filter: (items) => {
+    //   return items.slice(0, 1)
+    // },
   })
 
   let val = 0
   let elapsed = 0
 
-  useTask((delta) => {
-    elapsed += delta
-    val = Math.sin(elapsed * 5) * 20
-  })
+  // useTask((delta) => {
+  //   elapsed += delta
+  //   val = Math.sin(elapsed * 5) * 20
+  // })
 </script>
 
 <PerfMonitor />

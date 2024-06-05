@@ -10,8 +10,8 @@
   } & InheritableContentProperties &
     EventHandlers
 
-  const defaultProperties = useDefaultProperties()
-  export const ref = new Content($$restProps, defaultProperties)
+  const defaultProps = useDefaultProperties()
+  export const ref = new Content($$restProps, defaultProps)
 </script>
 
 <Base

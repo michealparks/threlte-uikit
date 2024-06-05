@@ -33,6 +33,7 @@
           return
         }
 
+        console.log(type)
         ;(is as Container).dispatchEvent({
           nativeEvent: event.nativeEvent,
           target: is,
@@ -45,16 +46,12 @@
     })
   }
 
+  let events = makeEvents()
   $: events = makeEvents()
-
-  console.log(is)
 
   const { invalidate } = useThrelte()
 
-  $: {
-    is.setProperties($$restProps)
-    invalidate()
-  }
+  $: is.setProperties($$restProps)
 
   $: is.name = name ?? ''
 

@@ -12,8 +12,8 @@
   } & InheritableImageProperties &
     EventHandlers
 
-  const defaultProperties = useDefaultProperties()
-  export const ref = new Image($$restProps, defaultProperties)
+  const defaultProps = useDefaultProperties()
+  export const ref = new Image($$restProps, defaultProps)
 </script>
 
 <Base

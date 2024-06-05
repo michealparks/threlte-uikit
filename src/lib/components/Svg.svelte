@@ -10,8 +10,8 @@
   } & InheritableContainerProperties &
     EventHandlers
 
-  const defaultProperties = useDefaultProperties()
-  export const ref = new Svg($$restProps, defaultProperties)
+  const defaultProps = useDefaultProperties()
+  export const ref = new Svg($$restProps, defaultProps)
 </script>
 
 <Base

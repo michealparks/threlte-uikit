@@ -16,13 +16,13 @@
   export let distanceToCamera: $$Props['distanceToCamera'] = undefined
 
   const { renderer, scheduler, renderStage, shouldRender } = useThrelte()
-  const defaultProperties = useDefaultProperties()
+  const defaultProps = useDefaultProperties()
   const fontFamilies = useFontFamilies()
   export const ref = new Fullscreen(
     renderer,
     distanceToCamera,
     $$restProps,
-    defaultProperties,
+    defaultProps,
     fontFamilies
   )
 

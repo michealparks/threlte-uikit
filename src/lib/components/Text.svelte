@@ -14,9 +14,9 @@
 
   export let text: $$Props['text']
 
-  const defaultProperties = useDefaultProperties()
+  const defaultProps = useDefaultProperties()
   const textSignal = signal(text)
-  export const ref = new Text(textSignal, $$restProps, defaultProperties)
+  export const ref = new Text(textSignal, $$restProps, defaultProps)
 
   $: textSignal.value = text
 </script>
