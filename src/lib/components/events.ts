@@ -2,36 +2,36 @@ import type { EventHandlers, ThreeEvent } from '@pmndrs/uikit/internals'
 
 type EventCallback<T> = (event: ThreeEvent<T>) => void
 type Events =
-	| 'click'
-	| 'contextMenu'
-	| 'doubleClick'
-	| 'pointerMove'
-	| 'wheel'
-	| 'pointerDown'
-	| 'pointerEnter'
-	| 'pointerLeave'
-	| 'pointerMissed'
-	| 'pointerOut'
-	| 'pointerOver'
-	| 'pointerUp'
+  | 'click'
+  | 'contextmenu'
+  | 'doubleclick'
+  | 'pointermove'
+  | 'wheel'
+  | 'pointerdown'
+  | 'pointerenter'
+  | 'pointerleave'
+  | 'pointermissed'
+  | 'pointerout'
+  | 'pointerover'
+  | 'pointerup'
 
 export const createEvents = (
-	rest: EventHandlers,
-	spy: <T>(type: Events, arg?: EventCallback<T>) => EventCallback<T> | undefined
+  rest: EventHandlers,
+  spy: <T>(type: Events, arg?: EventCallback<T>) => EventCallback<T> | undefined
 ): EventHandlers => {
-	return {
-		onClick: rest.onClick ? spy('click', rest.onClick) : undefined,
-		onContextMenu: rest.onContextMenu ? spy('contextMenu', rest.onContextMenu) : undefined,
-		onDoubleClick: rest.onDoubleClick ? spy('doubleClick', rest.onDoubleClick) : undefined,
-		onPointerMove: rest.onPointerMove ? spy('pointerMove', rest.onPointerMove) : undefined,
-		onWheel: rest.onWheel ? spy('wheel', rest.onWheel) : undefined,
+  return {
+    onClick: rest.onClick ? spy('click', rest.onClick) : undefined,
+    onContextMenu: rest.onContextMenu ? spy('contextmenu', rest.onContextMenu) : undefined,
+    onDoubleClick: rest.onDoubleClick ? spy('doubleclick', rest.onDoubleClick) : undefined,
+    onPointerMove: rest.onPointerMove ? spy('pointermove', rest.onPointerMove) : undefined,
+    onWheel: rest.onWheel ? spy('wheel', rest.onWheel) : undefined,
 
-		onPointerDown: spy('pointerDown', rest.onPointerDown),
-		onPointerEnter: spy('pointerEnter', rest.onPointerEnter),
-		onPointerLeave: spy('pointerLeave', rest.onPointerLeave),
-		onPointerMissed: spy('pointerMissed', rest.onPointerMissed),
-		onPointerOut: spy('pointerOut', rest.onPointerOut),
-		onPointerOver: spy('pointerOver', rest.onPointerOver),
-		onPointerUp: spy('pointerUp', rest.onPointerUp),
-	}
+    onPointerDown: spy('pointerdown', rest.onPointerDown),
+    onPointerEnter: spy('pointerenter', rest.onPointerEnter),
+    onPointerLeave: spy('pointerleave', rest.onPointerLeave),
+    onPointerMissed: spy('pointermissed', rest.onPointerMissed),
+    onPointerOut: spy('pointerout', rest.onPointerOut),
+    onPointerOver: spy('pointerover', rest.onPointerOver),
+    onPointerUp: spy('pointerup', rest.onPointerUp),
+  }
 }

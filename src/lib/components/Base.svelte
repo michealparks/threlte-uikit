@@ -33,7 +33,6 @@
           return
         }
 
-        console.log(type)
         ;(is as Container).dispatchEvent({
           nativeEvent: event.nativeEvent,
           target: is,

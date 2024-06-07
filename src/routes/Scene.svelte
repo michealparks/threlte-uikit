@@ -17,10 +17,10 @@
   let val = 0
   let elapsed = 0
 
-  // useTask((delta) => {
-  //   elapsed += delta
-  //   val = Math.sin(elapsed * 5) * 20
-  // })
+  useTask((delta) => {
+    elapsed += delta
+    val = Math.sin(elapsed * 5) * 20
+  })
 </script>
 
 <PerfMonitor />

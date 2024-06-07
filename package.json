@@ -1,6 +1,7 @@
 {
   "name": "temp",
-  "version": "0.0.1",
+  "version": "0.0.0",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite dev",
@@ -26,10 +27,11 @@
     "!dist/**/*.spec.*"
   ],
   "peerDependencies": {
-    "svelte": "^4.0.0"
+    "svelte": ">=4"
   },
   "devDependencies": {
-    "@pmndrs/uikit": "0.3.5",
+    "@changesets/cli": "^2.27.5",
+    "@pmndrs/uikit": "0.3.6",
     "@preact/signals-core": "^1.6.0",
     "@sveltejs/adapter-auto": "^3.2.1",
     "@sveltejs/kit": "^2.5.10",
@@ -43,11 +45,11 @@
     "eslint": "^9.4.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-svelte": "^2.39.0",
-    "globals": "^15.3.0",
-    "prettier": "^3.3.0",
-    "prettier-plugin-svelte": "^3.2.3",
+    "globals": "^15.4.0",
+    "prettier": "^3.3.1",
+    "prettier-plugin-svelte": "^3.2.4",
     "publint": "^0.2.8",
-    "svelte": "^4.2.17",
+    "svelte": "^4.2.18",
     "svelte-check": "^3.8.0",
     "three": "^0.165.0",
     "tslib": "^2.6.3",
@@ -56,7 +58,5 @@
     "vite": "^5.2.12",
     "vitest": "^1.6.0",
     "vitest-canvas-mock": "^0.3.3"
-  },
-  "svelte": "./dist/index.js",
-  "types": "./dist/index.d.ts"
+  }
 }
