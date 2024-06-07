@@ -5,29 +5,29 @@ import { useDefaultProperties } from './useDefaultProperties'
 import { useFontFamilies } from './useFontFamilies'
 
 export const createRoot = (fullscreen = false) => {
-	const { camera, renderer, shouldRender, scheduler, renderStage } = useThrelte()
-	const defaultProperties = useDefaultProperties()
-	const fontFamilies = useFontFamilies()
+  const { camera, renderer, shouldRender, scheduler, renderStage } = useThrelte()
+  const defaultProperties = useDefaultProperties()
+  const fontFamilies = useFontFamilies()
 
-	const cameraSignal = signal(camera.current)
-	const root = fullscreen
-		? new Fullscreen(renderer, undefined, undefined, defaultProperties, fontFamilies)
-		: new Root(cameraSignal, renderer, defaultProperties, undefined, fontFamilies)
+  const cameraSignal = signal(camera.current)
+  const root = fullscreen
+    ? new Fullscreen(renderer, undefined, undefined, defaultProperties, fontFamilies)
+    : new Root(cameraSignal, renderer, defaultProperties, undefined, fontFamilies)
 
-	watch(camera, ($camera) => {
-		cameraSignal.value = $camera
-	})
+  watch(camera, ($camera) => {
+    cameraSignal.value = $camera
+  })
 
-	const stage = scheduler.createStage(Symbol('uikit-stage'), { before: renderStage })
+  const stage = scheduler.createStage(Symbol('uikit-stage'), { before: renderStage })
 
-	useTask(
-		(delta) => {
-			if (shouldRender()) {
-				root.update(delta)
-			}
-		},
-		{ autoInvalidate: false, stage }
-	)
+  useTask(
+    (delta) => {
+      if (shouldRender()) {
+        root.update(delta)
+      }
+    },
+    { autoInvalidate: false, stage }
+  )
 
-	return root
+  return root
 }
