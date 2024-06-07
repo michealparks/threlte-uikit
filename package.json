@@ -14,7 +14,8 @@
     "test": "vitest",
     "prettier": "prettier --check",
     "lint": "prettier --check . && eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "release": "changeset publish"
   },
   "exports": {
     ".": {
