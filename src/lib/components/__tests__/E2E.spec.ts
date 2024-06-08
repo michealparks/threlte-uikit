@@ -1,6 +1,6 @@
 import { render } from '@threlte/test'
 import { describe, expect, it } from 'vitest'
-import Subject from './fixtures/E2E.svelte'
+import Subject from './E2E.spec.svelte'
 
 describe('E2E', () => {
   it('generates a root, container, and text in the scene graph', () => {

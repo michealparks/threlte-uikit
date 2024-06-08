@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Container } from '@pmndrs/uikit'
-  import Base from '../../Base.svelte'
-  import Root from '../../Root.svelte'
+  import Base from '../Base/Base.svelte'
+  import Root from '../Root.svelte'
 </script>
 
 <Root>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Content } from '@pmndrs/uikit'
-  import Base from './Base.svelte'
+  import Base from './Base/Base.svelte'
   import type { EventHandlers, InheritableContentProperties } from '@pmndrs/uikit/internals'
   import { useDefaultProperties } from '$lib/useDefaultProperties'
 

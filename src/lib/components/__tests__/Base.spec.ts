@@ -1,46 +1,61 @@
 import { act, render } from '@threlte/test'
 import { describe, expect, it, vi } from 'vitest'
-import { style, BaseFixture } from './fixtures'
+import { style, getUiKitObject } from './util'
 
-describe('<Base>', () => {
+import Subject from './Base.spec.svelte'
+
+describe('Base', () => {
   it('creates an object3D', () => {
-    const { scene } = render(BaseFixture)
-    expect(scene.getObjectByName('base')).toBeDefined()
+    const { scene } = render(Subject)
+    expect(getUiKitObject(scene, 'base')).toBeDefined()
   })
 
   it('sets properties', () => {
-    const { scene } = render(BaseFixture, { ...style })
-    expect(scene.getObjectByName('base')?.propertiesSignal.peek()).toStrictEqual(style)
+    const { scene } = render(Subject, { ...style })
+    expect(getUiKitObject(scene, 'base').propertiesSignal.peek()).toEqual(style)
   })
 
   it('resets properties', async () => {
-    const { scene, rerender } = render(BaseFixture, { ...style })
-    expect(scene.getObjectByName('base')?.propertiesSignal.peek()).toStrictEqual(style)
+    const { scene, rerender } = render(Subject, { ...style })
+    expect(getUiKitObject(scene, 'base').propertiesSignal.peek()).toEqual(style)
 
     await rerender({ marginTop: 5 })
 
-    expect(scene.getObjectByName('base')?.propertiesSignal.peek().marginTop).toBe(5)
+    expect(getUiKitObject(scene, 'base').propertiesSignal.peek()).toEqual({
+      ...style,
+      marginTop: 5,
+    })
+  })
+
+  it('adds props', async () => {
+    const { scene, rerender } = render(Subject, { ...style })
+    expect(getUiKitObject(scene, 'base').propertiesSignal.peek()).toEqual(style)
+
+    await rerender({ marginBottom: 5 })
+
+    expect(getUiKitObject(scene, 'base').propertiesSignal.peek()).toEqual({
+      ...style,
+      marginBottom: 5,
+    })
   })
 
   it('sets hover / active properties', async () => {
-    const { scene } = render(BaseFixture, { hover: { ...style }, active: { ...style } })
-    expect(scene.getObjectByName('base')?.propertiesSignal.peek()).toStrictEqual({
-      hover: { ...style },
-      active: { ...style },
-    })
+    const props = { hover: { ...style }, active: { ...style } }
+    const { scene } = render(Subject, props)
+    expect(getUiKitObject(scene, 'base').propertiesSignal.peek()).toEqual(props)
   })
 
   it('fires events', async () => {
     const onClick = vi.fn()
     const onPointerEnter = vi.fn()
-    const { scene, fireEvent } = render(BaseFixture, { onClick, onPointerEnter })
+    const { scene, fireEvent } = render(Subject, { onClick, onPointerEnter })
 
-    await fireEvent(scene.getObjectByName('base')!, 'click', {})
+    await fireEvent(getUiKitObject(scene, 'base'), 'click', {} as any)
     expect(onClick).toHaveBeenCalledOnce()
     await act()
     expect(onClick).toHaveBeenCalledOnce()
 
-    await fireEvent(scene.getObjectByName('base')!, 'pointerenter', {})
+    await fireEvent(getUiKitObject(scene, 'base'), 'pointerenter', {} as any)
     expect(onPointerEnter).toHaveBeenCalledOnce()
     await act()
     expect(onPointerEnter).toHaveBeenCalledOnce()

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { CustomContainer } from '@pmndrs/uikit'
-  import Base from './Base.svelte'
+  import Base from './Base/Base.svelte'
   import type { EventHandlers, InheritableCustomContainerProperties } from '@pmndrs/uikit/internals'
   import { useDefaultProperties } from '$lib/useDefaultProperties'
 
