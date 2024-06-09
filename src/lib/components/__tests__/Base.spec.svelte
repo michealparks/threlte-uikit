@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Container } from '@pmndrs/uikit'
-  import Base from '../Base/Base.svelte'
+  import Base from '../Shared/Base.svelte'
   import Root from '../Root.svelte'
 </script>
 
