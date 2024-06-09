@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Root, Container, Text, Image, reversePainterSortStable } from '$lib'
+  import { Root, Container, Text, Image, Fullscreen, reversePainterSortStable } from '$lib'
   import { T, useTask, useThrelte } from '@threlte/core'
   import { OrbitControls, PerfMonitor, interactivity } from '@threlte/extras'
 
@@ -9,9 +9,7 @@
   renderer.setTransparentSort(reversePainterSortStable)
 
   interactivity({
-    // filter: (items) => {
-    //   return items.slice(0, 1)
-    // },
+    filter: (hits) => hits.slice(0, 1),
   })
 
   let val = 0
@@ -32,6 +30,12 @@
   on:create={({ ref }) => ref.lookAt(0, 0, 0)}
 >
   <OrbitControls />
+
+  <Fullscreen>
+    <Container>
+      <Text text="npm i threlte-uikit" />
+    </Container>
+  </Fullscreen>
 </T.PerspectiveCamera>
 
 <T.Group>
@@ -47,7 +51,6 @@
     hover={{
       backgroundColor: '#ccc',
     }}
-    onClick={() => console.log('click root')}
   >
     <Container
       width="100%"

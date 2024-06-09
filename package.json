@@ -29,7 +29,8 @@
     "!dist/**/*.spec.*"
   ],
   "peerDependencies": {
-    "svelte": ">=4"
+    "svelte": ">=4",
+    "@threlte/core": ">=7"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.5",
@@ -41,12 +42,12 @@
     "@sveltejs/vite-plugin-svelte": "^3.1.1",
     "@threlte/core": "^7.3.0",
     "@threlte/extras": "^8.11.2",
-    "@threlte/test": "^0.2.1",
+    "@threlte/test": "^0.2.3",
     "@types/eslint": "^8.56.10",
     "@types/three": "^0.165.0",
     "eslint": "^9.4.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-svelte": "^2.39.0",
+    "eslint-plugin-svelte": "^2.39.2",
     "globals": "^15.4.0",
     "prettier": "^3.3.1",
     "prettier-plugin-svelte": "^3.2.4",
@@ -57,7 +58,7 @@
     "tslib": "^2.6.3",
     "typescript": "^5.4.5",
     "typescript-eslint": "^8.0.0-alpha.20",
-    "vite": "^5.2.12",
+    "vite": "^5.2.13",
     "vitest": "^1.6.0",
     "vitest-canvas-mock": "^0.3.3"
   }

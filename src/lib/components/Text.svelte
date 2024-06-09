@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Text } from '@pmndrs/uikit'
-  import Base from './Base.svelte'
+  import Base from './Shared/Base.svelte'
   import { signal } from '@preact/signals-core'
   import type { EventHandlers, InheritableTextProperties } from '@pmndrs/uikit/internals'
   import { useDefaultProperties } from '$lib/useDefaultProperties'

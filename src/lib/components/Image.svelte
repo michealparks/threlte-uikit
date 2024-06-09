@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Texture } from 'three'
   import { Image } from '@pmndrs/uikit'
-  import Base from './Base.svelte'
+  import Base from './Shared/Base.svelte'
   import type { EventHandlers, InheritableImageProperties } from '@pmndrs/uikit/internals'
   import { useDefaultProperties } from '$lib/useDefaultProperties'
 
