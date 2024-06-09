@@ -1,5 +1,11 @@
 # temp
 
+## 0.0.3
+
+### Patch Changes
+
+- 237c78e: Add missing dependency
+
 ## 0.0.2
 
 ### Patch Changes
