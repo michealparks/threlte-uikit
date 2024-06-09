@@ -28,13 +28,15 @@
     "!dist/**/*.test.*",
     "!dist/**/*.spec.*"
   ],
+  "dependencies": {
+    "@pmndrs/uikit": "^0.3.6"
+  },
   "peerDependencies": {
-    "svelte": ">=4",
-    "@threlte/core": ">=7"
+    "@threlte/core": ">=7",
+    "svelte": ">=4"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.5",
-    "@pmndrs/uikit": "0.3.6",
     "@preact/signals-core": "^1.6.0",
     "@sveltejs/adapter-auto": "^3.2.1",
     "@sveltejs/kit": "^2.5.10",
