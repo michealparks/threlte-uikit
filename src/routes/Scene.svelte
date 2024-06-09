@@ -8,7 +8,9 @@
   renderer.localClippingEnabled = true
   renderer.setTransparentSort(reversePainterSortStable)
 
-  interactivity()
+  interactivity({
+    filter: (hits) => hits.slice(0, 1),
+  })
 
   let val = 0
   let elapsed = 0
@@ -29,7 +31,11 @@
 >
   <OrbitControls />
 
-  <Fullscreen></Fullscreen>
+  <Fullscreen>
+    <Container>
+      <Text text="npm i threlte-uikit" />
+    </Container>
+  </Fullscreen>
 </T.PerspectiveCamera>
 
 <T.Group>
@@ -45,7 +51,6 @@
     hover={{
       backgroundColor: '#ccc',
     }}
-    onClick={() => console.log('click root')}
   >
     <Container
       width="100%"

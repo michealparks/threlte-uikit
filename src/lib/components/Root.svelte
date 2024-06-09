@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Base from './Base/Base.svelte'
+  import Base from './Shared/Base.svelte'
   import type { EventHandlers, InheritableRootProperties } from '@pmndrs/uikit/internals'
   import { Root } from '@pmndrs/uikit'
   import { signal } from '@preact/signals-core'
