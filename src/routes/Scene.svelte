@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { Root, Container, Text, Image, Fullscreen, reversePainterSortStable } from '$lib'
+  import { Root, Container, Text, Image, reversePainterSortStable } from '$lib'
   import { T, useTask, useThrelte } from '@threlte/core'
   import { OrbitControls, PerfMonitor, interactivity } from '@threlte/extras'
+  import Fullscreen from './Fullscreen.svelte'
 
   const { renderer } = useThrelte()
 
@@ -31,11 +32,7 @@
 >
   <OrbitControls />
 
-  <Fullscreen>
-    <Container>
-      <Text text="npm i threlte-uikit" />
-    </Container>
-  </Fullscreen>
+  <Fullscreen />
 </T.PerspectiveCamera>
 
 <T.Group>
