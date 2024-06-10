@@ -9,9 +9,7 @@
   renderer.localClippingEnabled = true
   renderer.setTransparentSort(reversePainterSortStable)
 
-  interactivity({
-    filter: (hits) => hits.slice(0, 1),
-  })
+  interactivity()
 
   let val = 0
   let elapsed = 0

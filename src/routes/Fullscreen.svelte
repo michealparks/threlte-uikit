@@ -8,6 +8,7 @@
   <Container alignItems="flex-end">
     <Container
       backgroundColor={active ? 'black' : '#eee'}
+      hover={{ backgroundColor: active ? 'black' : '#ddd' }}
       padding={10}
       margin={10}
       onClick={() => {
