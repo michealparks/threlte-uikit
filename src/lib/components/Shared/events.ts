@@ -12,6 +12,7 @@ export const eventNames = [
   'pointermissed',
   'pointerout',
   'pointerover',
+  'pointercancel',
   'pointerup',
 ] as const
 
@@ -27,6 +28,7 @@ export const eventPropNames = [
   'onPointerMissed',
   'onPointerOut',
   'onPointerOver',
+  'onPointerCancel',
   'onPointerUp',
 ] as const
 

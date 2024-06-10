@@ -1,6 +1,5 @@
 <script lang="ts">
   import type {
-    AllOptionalProperties,
     Container,
     CustomContainer,
     Root,
@@ -19,21 +18,25 @@
   type T = $$Generic<Container | CustomContainer | Root | Fullscreen | Text | Image | Content | Svg>
 
   type $$Props = {
+    hover: boolean
+    active: boolean
     is: T
+    events: EventHandlers
     name?: string
-  } & EventHandlers &
-    AllOptionalProperties
+  } & EventHandlers
 
   export let is: $$Props['is']
-  export let name: $$Props['name'] = undefined
+  export let events: EventHandlers
+  export let hover: boolean
+  export let active: boolean
+  export let name: string | undefined = undefined
 
-  $: props = $$restProps
-  $: needsEvents =
-    props.hover !== undefined || props.active !== undefined || hasPointerEvents(props)
+  $: hasEvents = hasPointerEvents(events)
+  $: needsEvents = hover || active || hasEvents
 
   const createHandler = (type: EventName, fn?: EventCallback<any>, required = false) => {
     if (fn === undefined) {
-      if (required && !props.hover && !props.active) {
+      if (required && !hover && !active) {
         return
       } else if (!required) {
         return
@@ -55,31 +58,30 @@
     }
   }
 
-  $: is.setProperties(props)
-  $: is.name = name ?? ''
-
   onMount(() => {
     return () => {
       is.destroy()
     }
   })
+
+  $: if (name) is.name = name
 </script>
 
 {#if needsEvents}
   <T
     {is}
-    on:click={createHandler('click', props.onClick)}
-    on:contextmenu={createHandler('contextmenu', props.onClick)}
-    on:ondblclick={createHandler('doubleclick', props.onDoubleClick)}
-    on:pointerdown={createHandler('pointerdown', props.onPointerDown, true)}
-    on:pointerenter={createHandler('pointerenter', props.onPointerEnter, true)}
-    on:pointerleave={createHandler('pointerleave', props.onPointerLeave, true)}
-    on:pointermissed={createHandler('pointermissed', props.onPointerMissed)}
-    on:pointermove={createHandler('pointermove', props.onPointerMove)}
-    on:pointerout={createHandler('pointerout', props.onPointerOut, true)}
-    on:pointerover={createHandler('pointerover', props.onPointerOver, true)}
-    on:pointerup={createHandler('pointerup', props.onPointerUp, true)}
-    on:wheel={createHandler('wheel', props.onWheel)}
+    on:click={createHandler('click', events.onClick)}
+    on:contextmenu={createHandler('contextmenu', events.onContextMenu)}
+    on:ondblclick={createHandler('doubleclick', events.onDoubleClick)}
+    on:pointerdown={createHandler('pointerdown', events.onPointerDown, true)}
+    on:pointerenter={createHandler('pointerenter', events.onPointerEnter, true)}
+    on:pointerleave={createHandler('pointerleave', events.onPointerLeave, true)}
+    on:pointermissed={createHandler('pointermissed', events.onPointerMissed)}
+    on:pointermove={createHandler('pointermove', events.onPointerMove)}
+    on:pointerout={createHandler('pointerout', events.onPointerOut, true)}
+    on:pointerover={createHandler('pointerover', events.onPointerOver, true)}
+    on:pointerup={createHandler('pointerup', events.onPointerUp, true)}
+    on:wheel={createHandler('wheel', events.onWheel)}
   >
     <slot />
   </T>

@@ -58,6 +58,7 @@
     "svelte-check": "^3.8.0",
     "three": "^0.165.0",
     "tslib": "^2.6.3",
+    "type-fest": "^4.20.0",
     "typescript": "^5.4.5",
     "typescript-eslint": "^8.0.0-alpha.20",
     "vite": "^5.2.13",
