@@ -31,7 +31,8 @@
   export let active: boolean
   export let name: string | undefined = undefined
 
-  $: needsEvents = hover || active || hasPointerEvents(events)
+  $: hasEvents = hasPointerEvents(events)
+  $: needsEvents = hover || active || hasEvents
 
   const createHandler = (type: EventName, fn?: EventCallback<any>, required = false) => {
     if (fn === undefined) {
