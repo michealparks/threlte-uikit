@@ -1,5 +1,11 @@
 # temp
 
+## 0.0.4
+
+### Patch Changes
+
+- 15985d9: Fix setProperties when using Svelte 5
+
 ## 0.0.3
 
 ### Patch Changes
