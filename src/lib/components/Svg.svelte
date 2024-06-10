@@ -30,7 +30,6 @@
     for (const key of Object.keys($$restProps)) {
       if (eventPropNames.includes(key as keyof EventHandlers)) {
         events[key as keyof EventHandlers] = $$restProps[key]
-        continue
       } else {
         props[key as keyof SvgProperties] = $$restProps[key]
       }
