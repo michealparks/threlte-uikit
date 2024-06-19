@@ -29,8 +29,7 @@
     "!dist/**/*.spec.*"
   ],
   "dependencies": {
-    "@pmndrs/uikit": "^0.3.6",
-    "svelte-splitpanes": "^8.0.5"
+    "@pmndrs/uikit": "^0.3.6"
   },
   "peerDependencies": {
     "@threlte/core": ">=7",
@@ -40,7 +39,7 @@
     "@changesets/cli": "^2.27.5",
     "@preact/signals-core": "^1.6.1",
     "@sveltejs/adapter-auto": "^3.2.2",
-    "@sveltejs/kit": "^2.5.16",
+    "@sveltejs/kit": "^2.5.17",
     "@sveltejs/package": "^2.3.2",
     "@sveltejs/vite-plugin-svelte": "^3.1.1",
     "@threlte/core": "^7.3.0",
