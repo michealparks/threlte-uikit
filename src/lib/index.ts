@@ -1,3 +1,7 @@
+// Contexts
+export { createDefaultProperties } from './useDefaultProperties'
+export { createFontFamilies } from './useFontFamilies'
+
 export {
   basedOnPreferredColorScheme,
   setPreferredColorScheme,
@@ -25,7 +29,3 @@ export { default as Text } from './components/Text.svelte'
 
 // Functions
 export { reversePainterSortStable } from '@pmndrs/uikit'
-
-// Contexts
-export { createDefaultProperties } from './useDefaultProperties'
-export { createFontFamilies } from './useFontFamilies'

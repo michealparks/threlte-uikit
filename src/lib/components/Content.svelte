@@ -1,50 +1,52 @@
 <script lang="ts">
-  import { Content } from '@pmndrs/uikit'
-  import Base from './Shared/Base.svelte'
-  import type { EventHandlers, InheritableContentProperties } from '@pmndrs/uikit/internals'
-  import { useDefaultProperties } from '$lib/useDefaultProperties'
-  import { eventPropNames } from './Shared/events'
-  import type { Writable } from 'type-fest'
+  import type { EventHandlers } from '@pmndrs/uikit/internals'
+  import { createParent, useParent } from '$lib/useParent'
+  import { T, currentWritable } from '@threlte/core'
+  import { Object3D } from 'three'
+  import { usePropertySignals } from '$lib/usePropSignals'
+  import { type ContentProperties, createContent } from '@pmndrs/uikit/internals'
+  import AddHandlers from './AddHandlers.svelte'
+  import { useInternals } from '$lib/useInternals'
 
-  type Properties = Writable<InheritableContentProperties>
-  type $$Props = {
+  type $$Props = ContentProperties & {
+    ref?: ReturnType<typeof createContent>
     name?: string
-    ref?: Content
-  } & Properties &
-    EventHandlers
+  } & EventHandlers
 
-  export let name: string | undefined = undefined
-  export let active: Properties['active'] = undefined
-  export let hover: Properties['hover'] = undefined
+  export let name: $$Props['name'] = undefined
 
-  const defaultProps = useDefaultProperties()
-  const events: EventHandlers = {}
+  const parent = useParent()
+  const outerRef = currentWritable(new Object3D())
+  const innerRef = currentWritable(new Object3D())
+  const propertySignals = usePropertySignals($$restProps)
+  $: propertySignals.properties.value = $$restProps
 
-  let props: Properties = {}
+  const internals = createContent(
+    parent,
+    propertySignals.style,
+    propertySignals.properties,
+    propertySignals.default,
+    outerRef,
+    innerRef
+  )
+  $: internals.interactionPanel.name = name ?? ''
 
-  $: {
-    props = {}
-    for (const key of Object.keys($$restProps)) {
-      if (eventPropNames.includes(key as keyof EventHandlers)) {
-        events[key as keyof EventHandlers] = $$restProps[key]
-      } else {
-        props[key as keyof Properties] = $$restProps[key]
-      }
-    }
-    if (active) props.active = active
-    if (hover) props.hover = hover
-  }
+  export const ref = internals
 
-  export const ref = new Content(undefined, defaultProps)
-  $: ref.setProperties(props)
-  $: if (name) ref.name = name
+  useInternals(internals)
+  createParent(undefined!)
 </script>
 
-<Base
-  is={ref}
-  {events}
-  active={active !== undefined}
-  hover={hover !== undefined}
+<AddHandlers
+  userHandlers={$$restProps}
+  handlers={internals.handlers}
+  ref={$outerRef}
 >
-  <slot />
-</Base>
+  <T is={internals.interactionPanel} />
+  <T
+    is={$innerRef}
+    matrixAutoUpdate={false}
+  >
+    <slot />
+  </T>
+</AddHandlers>

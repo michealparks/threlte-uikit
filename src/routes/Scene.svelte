@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { Root, Container, Text, Image, reversePainterSortStable } from '$lib'
+  import { Root, Container, Text, Image, Content } from '$lib'
   import { T, useTask, useThrelte } from '@threlte/core'
-  import { OrbitControls, PerfMonitor, interactivity } from '@threlte/extras'
+  import { OrbitControls, interactivity } from '@threlte/extras'
   import Fullscreen from './Fullscreen.svelte'
+  import Svg from '$lib/components/Svg.svelte'
+  // import { Inspector } from 'three-inspect'
 
   const { renderer } = useThrelte()
-
   renderer.localClippingEnabled = true
-  renderer.setTransparentSort(reversePainterSortStable)
 
   interactivity()
 
@@ -20,8 +20,6 @@
   })
 </script>
 
-<PerfMonitor />
-
 <T.PerspectiveCamera
   name="myCam"
   makeDefault
@@ -32,6 +30,8 @@
 
   <Fullscreen />
 </T.PerspectiveCamera>
+
+<!-- <Inspector /> -->
 
 <T.Group>
   <Root
@@ -47,10 +47,16 @@
       backgroundColor: '#ccc',
     }}
   >
+    <Svg
+      src="./svelte.svg"
+      width={30}
+      padding={5}
+    />
     <Container
       width="100%"
       padding={5}
       justifyContent="center"
+      alignItems="center"
       backgroundColor="red"
       hover={{
         backgroundColor: 'purple',
@@ -68,6 +74,17 @@
         onPointerDown={(event) => console.log('pointerdown text', event)}
         onPointerUp={(event) => console.log('pointerup text', event)}
       />
+      <Content
+        height={100}
+        width={100}
+        depthAlign="center"
+        keepAspectRatio={false}
+      >
+        <T.Mesh name="thingy">
+          <T.DodecahedronGeometry />
+          <T.WireframeGeometry color="hotpink" />
+        </T.Mesh>
+      </Content>
     </Container>
     <Image
       width="100%"
