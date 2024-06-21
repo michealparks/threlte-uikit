@@ -6,10 +6,10 @@
   import { usePropertySignals } from '$lib/usePropSignals'
   import { type ContentProperties, createContent } from '@pmndrs/uikit/internals'
   import AddHandlers from './AddHandlers.svelte'
-  import { useInternals } from '$lib/useInternals'
+  import { useInternals, type ComponentInternals } from '$lib/useInternals'
 
   type $$Props = ContentProperties & {
-    ref?: ReturnType<typeof createContent>
+    ref?: ComponentInternals<ContentProperties>
     name?: string
   } & EventHandlers
 
@@ -31,9 +31,12 @@
   )
   $: internals.interactionPanel.name = name ?? ''
 
-  export const ref = internals
+  export const ref = useInternals<ContentProperties>(
+    internals,
+    propertySignals.style,
+    parent.root.pixelSize
+  )
 
-  useInternals(internals)
   createParent(undefined!)
 </script>
 

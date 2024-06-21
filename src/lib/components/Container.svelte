@@ -9,10 +9,10 @@
   import { Group } from 'three'
   import { T, currentWritable } from '@threlte/core'
   import AddHandlers from './AddHandlers.svelte'
-  import { useInternals } from '$lib/useInternals'
+  import { useInternals, type ComponentInternals } from '$lib/useInternals'
 
   type $$Props = ContainerProperties & {
-    ref?: ReturnType<typeof createContainer>
+    ref?: ComponentInternals<ContainerProperties>
     name?: string
   } & EventHandlers
 
@@ -34,9 +34,12 @@
   )
   $: internals.interactionPanel.name = name ?? ''
 
-  export const ref = internals
+  export const ref = useInternals<ContainerProperties>(
+    internals,
+    propertySignals.style,
+    parent.root.pixelSize
+  )
 
-  useInternals(internals)
   createParent(internals)
 </script>
 

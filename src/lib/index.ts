@@ -18,6 +18,8 @@ export {
   type ColorRepresentation,
 } from '@pmndrs/uikit'
 
+export { type FontFamilies } from '@pmndrs/uikit/internals'
+
 // Components
 export { default as Container } from './components/Container.svelte'
 export { default as Content } from './components/Content.svelte'

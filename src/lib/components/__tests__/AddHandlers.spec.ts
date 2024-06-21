@@ -1,23 +1,23 @@
-import { act, render } from '@threlte/test'
+import { render } from '@threlte/test'
 import { describe, expect, it, vi } from 'vitest'
 import { getUiKitObject } from './util'
 
-import Subject from './Base.spec.svelte'
+import Subject from './AddHandlers.spec.svelte'
 
-describe('Base', () => {
+describe('AddHandlers', () => {
   it('fires events', async () => {
     const onClick = vi.fn()
     const onPointerEnter = vi.fn()
     const { scene, fireEvent } = render(Subject, {
       props: {
-        events: { onClick, onPointerEnter },
+        userHandlers: { onClick, onPointerEnter },
       },
     })
 
-    await fireEvent(getUiKitObject(scene, 'base'), 'click', {} as any)
+    await fireEvent(getUiKitObject(scene, 'AddHandlers'), 'click')
     expect(onClick).toHaveBeenCalledOnce()
 
-    await fireEvent(getUiKitObject(scene, 'base'), 'pointerenter', {} as any)
+    await fireEvent(getUiKitObject(scene, 'AddHandlers'), 'pointerenter')
     expect(onPointerEnter).toHaveBeenCalledOnce()
   })
 
@@ -26,19 +26,17 @@ describe('Base', () => {
     expect(component.interactivity.interactiveObjects.length).toBe(0)
   })
 
-  // @TODO only add pointerenter leave
   it('adds events if hover properties are present', async () => {
     const { scene, fireEvent, component } = render(Subject, { hover: true })
     expect(component.interactivity.interactiveObjects.length).toBe(1)
-    await fireEvent(getUiKitObject(scene, 'base'), 'pointerenter', {} as any)
-    await fireEvent(getUiKitObject(scene, 'base'), 'pointerleave', {} as any)
+    await fireEvent(getUiKitObject(scene, 'AddHandlers'), 'pointerenter')
+    await fireEvent(getUiKitObject(scene, 'AddHandlers'), 'pointerleave')
   })
 
-  // @TODO only add pointerup down
   it('adds events if active properties are present', async () => {
     const { scene, fireEvent, component } = render(Subject, { active: true })
     expect(component.interactivity.interactiveObjects.length).toBe(1)
-    await fireEvent(getUiKitObject(scene, 'base'), 'pointerenter', {} as any)
-    await fireEvent(getUiKitObject(scene, 'base'), 'pointerleave', {} as any)
+    await fireEvent(getUiKitObject(scene, 'AddHandlers'), 'pointerenter')
+    await fireEvent(getUiKitObject(scene, 'AddHandlers'), 'pointerleave')
   })
 })

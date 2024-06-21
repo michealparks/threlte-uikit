@@ -5,10 +5,10 @@
   import { T, currentWritable } from '@threlte/core'
   import { usePropertySignals } from '$lib/usePropSignals'
   import AddHandlers from './AddHandlers.svelte'
-  import { useInternals } from '$lib/useInternals'
+  import { useInternals, type ComponentInternals } from '$lib/useInternals'
 
   type $$Props = ImageProperties & {
-    ref?: ReturnType<typeof createImage>
+    ref?: ComponentInternals<ImageProperties>
     name?: string
     src?: string | Texture
   } & EventHandlers
@@ -31,9 +31,8 @@
   )
   $: internals.interactionPanel.name = name ?? ''
 
-  export const ref = internals
+  export const ref = useInternals(internals, propertySignals.style, parent.root.pixelSize)
 
-  useInternals(internals)
   createParent(internals)
 </script>
 

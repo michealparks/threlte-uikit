@@ -12,10 +12,10 @@
   import { useFontFamilies } from '$lib/useFontFamilies'
   import { usePropertySignals } from '$lib/usePropSignals'
   import AddHandlers from './AddHandlers.svelte'
-  import { useInternals } from '$lib/useInternals'
+  import { useInternals, type ComponentInternals } from '$lib/useInternals'
 
   type $$Props = TextProperties & {
-    ref?: ReturnType<typeof createText>
+    ref?: ComponentInternals<TextProperties>
     name?: string
     text: string
   } & EventHandlers
@@ -47,9 +47,7 @@
   )
   $: internals.interactionPanel.name = name ?? ''
 
-  export const ref = internals
-
-  useInternals(internals)
+  export const ref = useInternals(internals, propertySignals.style, parent.root.pixelSize)
 </script>
 
 <AddHandlers

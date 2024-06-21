@@ -15,13 +15,12 @@
   import { usePropertySignals } from '$lib/usePropSignals'
   import { Group } from 'three'
   import { createParent } from '$lib/useParent'
-  import { useInternals } from '$lib/useInternals'
+  import { useInternals, type ComponentInternals } from '$lib/useInternals'
 
   type $$Props = RootProperties &
     WithReactive<{ pixelSize?: number }> & {
-      ref?: ReturnType<typeof createRoot>
+      ref?: ComponentInternals<RootProperties>
       name?: string
-      pixelSize?: number
     } & EventHandlers
 
   export let pixelSize: $$Props['pixelSize'] = undefined
@@ -29,7 +28,9 @@
 
   const { camera, renderer, shouldRender, scheduler, renderStage, invalidate } = useThrelte()
 
-  renderer.setTransparentSort(reversePainterSortStable)
+  // @TODO(mp) Remove optional once @threlte/test supports webgl2 context mocking.
+  renderer.setTransparentSort?.(reversePainterSortStable)
+  renderer.localClippingEnabled = true
 
   const onFrameSet = new Set<(delta: number) => void>()
 
@@ -67,7 +68,7 @@
   )
   $: internals.interactionPanel.name = name ?? ''
 
-  export const ref = internals
+  export const ref = useInternals(internals, propertySignals.style, internals.root.pixelSize)
 
   useTask(
     (delta) => {
@@ -84,8 +85,6 @@
       stage: scheduler.createStage(Symbol('uikit-stage'), { before: renderStage }),
     }
   )
-
-  useInternals(internals)
 
   createParent(internals)
 </script>
