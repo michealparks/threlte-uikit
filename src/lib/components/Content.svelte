@@ -1,15 +1,18 @@
 <script lang="ts">
-  import type { EventHandlers } from '@pmndrs/uikit/internals'
-  import { createParent, useParent } from '$lib/useParent'
-  import { T, currentWritable } from '@threlte/core'
   import { Object3D } from 'three'
+  import { T, currentWritable } from '@threlte/core'
+  import {
+    type ContentProperties,
+    type EventHandlers,
+    createContent,
+  } from '@pmndrs/uikit/internals'
+  import { createParent, useParent } from '$lib/useParent'
   import { usePropertySignals } from '$lib/usePropSignals'
-  import { type ContentProperties, createContent } from '@pmndrs/uikit/internals'
+  import { useInternals, type ContentRef } from '$lib/useInternals'
   import AddHandlers from './AddHandlers.svelte'
-  import { useInternals, type ComponentInternals } from '$lib/useInternals'
 
   type $$Props = ContentProperties & {
-    ref?: ComponentInternals<ContentProperties>
+    ref?: ContentRef
     name?: string
   } & EventHandlers
 

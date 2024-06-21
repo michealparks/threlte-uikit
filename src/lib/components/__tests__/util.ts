@@ -1,7 +1,6 @@
-import type { AllOptionalProperties } from '@pmndrs/uikit'
 import type { Object3D, Scene } from 'three'
 import type { Signal } from '@preact/signals-core'
-import type { FontFamilies } from '@pmndrs/uikit/internals'
+import type { FontFamilies, AllOptionalProperties } from '$lib'
 
 export const style: AllOptionalProperties = {
   marginTop: 10,

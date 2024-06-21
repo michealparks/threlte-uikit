@@ -9,14 +9,17 @@
     createFontFamilies,
     type AllOptionalProperties,
     type FontFamilies,
+    type RootRef,
+    type ContainerRef,
+    type TextRef,
   } from '$lib'
 
   export let style: AllOptionalProperties | undefined = undefined
   export let fontFamilies: FontFamilies | undefined = undefined
 
-  export let root
-  export let container
-  export let text
+  export let root: RootRef
+  export let container: ContainerRef
+  export let text: TextRef
 
   if (style) {
     createDefaultProperties(style)

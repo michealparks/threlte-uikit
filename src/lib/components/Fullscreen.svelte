@@ -1,17 +1,17 @@
 <script lang="ts">
+  import type { PerspectiveCamera } from 'three'
   import { useThrelte, T } from '@threlte/core'
+  import { batch, signal } from '@preact/signals-core'
   import {
     type FullscreenProperties,
     type EventHandlers,
     updateSizeFullscreen,
   } from '@pmndrs/uikit/internals'
-  import { batch, signal } from '@preact/signals-core'
+  import type { RootRef } from '$lib/useInternals'
   import Root from './Root.svelte'
-  import type { PerspectiveCamera } from 'three'
-  import type { ComponentInternals } from '$lib/useInternals'
 
   type $$Props = FullscreenProperties & {
-    ref?: ComponentInternals<FullscreenProperties>
+    ref?: RootRef
     name?: string
     distanceToCamera?: number
     pixelSize?: number

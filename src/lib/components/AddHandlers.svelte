@@ -1,9 +1,8 @@
 <script lang="ts">
-  import type { Signal } from '@preact/signals-core'
-  import { T } from '@threlte/core'
   import type { Object3D } from 'three'
-  import type { EventHandlers } from '@pmndrs/uikit'
-  import { addHandler } from '@pmndrs/uikit/internals'
+  import { T } from '@threlte/core'
+  import type { Signal } from '@preact/signals-core'
+  import { type EventHandlers, addHandler } from '@pmndrs/uikit/internals'
 
   export let ref: Object3D
   export let userHandlers: EventHandlers
@@ -45,8 +44,8 @@
   $: allHandlers = createHandlers(userHandlers, $handlers)
 </script>
 
-{#if allowSkippingChildren && handlers == null}
-  <!-- No events -->
+{#if allowSkippingChildren && handlers === undefined}
+  <!-- -->
 {:else}
   <T
     is={ref}

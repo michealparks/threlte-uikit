@@ -1,6 +1,6 @@
 import { render } from '@threlte/test'
 import { describe, expect, it, vi } from 'vitest'
-import { style, getUiKitObject } from './util'
+import { getUiKitObject } from './util'
 
 import Subject from './Container.spec.svelte'
 

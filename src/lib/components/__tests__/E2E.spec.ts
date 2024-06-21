@@ -16,4 +16,6 @@ describe('E2E', () => {
     expect(text?.parent?.parent).toBe(container)
     expect(container?.parent?.parent).toBe(root)
   })
+
+  it('fires events', () => {})
 })

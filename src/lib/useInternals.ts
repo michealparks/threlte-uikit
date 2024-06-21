@@ -1,4 +1,6 @@
+import { onMount } from 'svelte'
 import type { Vector2Tuple, Mesh } from 'three'
+import type { CurrentWritable } from '@threlte/core'
 import { type ReadonlySignal, type Signal, untracked } from '@preact/signals-core'
 import {
   initialize,
@@ -10,13 +12,15 @@ import {
   createRoot,
   createSvg,
   createText,
-  createIcon,
-  createCustomContainer,
+  // createIcon,
+  // createCustomContainer,
   type ContainerProperties,
   type MergedProperties,
+  type ImageProperties,
+  type RootProperties,
+  type SvgProperties,
+  type TextProperties,
 } from '@pmndrs/uikit/internals'
-import { onMount } from 'svelte'
-import type { CurrentWritable } from '@threlte/core'
 
 export type ComponentInternals<T = ContainerProperties> = {
   /**
@@ -70,14 +74,21 @@ export type ComponentInternals<T = ContainerProperties> = {
   getComputedProperty<K extends keyof T>(key: K): T[K] | undefined
 }
 
+export type ContainerRef = ComponentInternals<ContainerProperties>
+export type ImageRef = ComponentInternals<ImageProperties>
+export type RootRef = ComponentInternals<RootProperties>
+export type SvgRef = ComponentInternals<SvgProperties>
+export type TextRef = ComponentInternals<TextProperties>
+export type ContentRef = ContainerRef
+
 type Internals = ReturnType<
   | typeof createContainer
   | typeof createImage
   | typeof createRoot
   | typeof createSvg
   | typeof createText
-  | typeof createIcon
-  | typeof createCustomContainer
+  // | typeof createIcon
+  // | typeof createCustomContainer
 > & {
   isClipped?: Signal<boolean>
   scrollPosition?: Signal<Vector2Tuple>
@@ -85,7 +96,7 @@ type Internals = ReturnType<
   interactionPanel: Mesh | CurrentWritable<Mesh>
 }
 
-export const useInternals = <T, Additional = {}>(
+export const useInternals = <T, Additional = object>(
   internals: Internals,
   styleSignal: Signal<T | undefined>,
   pixelSize: Signal<number>,

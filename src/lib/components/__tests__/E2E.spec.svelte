@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Root, Container, Text } from '../..'
+  import { Root, Container, Text } from '$lib'
 </script>
 
 <Root name="root">

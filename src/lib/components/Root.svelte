@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { T } from '@threlte/core'
+  import { Group } from 'three'
+  import { T, useThrelte, useTask, currentWritable } from '@threlte/core'
   import { type Signal, computed, signal } from '@preact/signals-core'
-  import { useThrelte, useTask, currentWritable } from '@threlte/core'
-  import AddHandlers from './AddHandlers.svelte'
   import {
     DEFAULT_PIXEL_SIZE,
     type EventHandlers,
@@ -12,14 +11,14 @@
     readReactive,
     reversePainterSortStable,
   } from '@pmndrs/uikit/internals'
-  import { usePropertySignals } from '$lib/usePropSignals'
-  import { Group } from 'three'
   import { createParent } from '$lib/useParent'
-  import { useInternals, type ComponentInternals } from '$lib/useInternals'
+  import { usePropertySignals } from '$lib/usePropSignals'
+  import { useInternals, type RootRef } from '$lib/useInternals'
+  import AddHandlers from './AddHandlers.svelte'
 
   type $$Props = RootProperties &
     WithReactive<{ pixelSize?: number }> & {
-      ref?: ComponentInternals<RootProperties>
+      ref?: RootRef
       name?: string
     } & EventHandlers
 
@@ -57,13 +56,14 @@
     onFrameSet,
     () => {
       if (whileOnFrameRef) {
-        //request render unnecassary -> already rendering
+        // request render unnecassary -> already rendering
         return
       }
-      //not rendering -> requesting a new frame
+
+      // not rendering -> requesting a new frame
       invalidate()
     },
-    //requestFrame = invalidate, because invalidate always causes another frame
+    // requestFrame = invalidate, because invalidate always causes another frame
     invalidate
   )
   $: internals.interactionPanel.name = name ?? ''

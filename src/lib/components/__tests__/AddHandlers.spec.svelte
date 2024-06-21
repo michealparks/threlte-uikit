@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { useInteractivity } from '@threlte/extras'
-  import AddHandlers from '../AddHandlers.svelte'
   import { Object3D } from 'three'
-  import type { EventHandlers } from '@pmndrs/uikit'
+  import { useInteractivity } from '@threlte/extras'
   import type { Signal } from '@preact/signals-core'
+  import AddHandlers from '../AddHandlers.svelte'
+
+  import type { EventHandlers } from '@pmndrs/uikit'
 
   export let userHandlers: EventHandlers
   export let handlers: Signal<EventHandlers>

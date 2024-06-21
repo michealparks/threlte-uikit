@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { Group } from 'three'
+  import { T, currentWritable } from '@threlte/core'
   import {
     type ContainerProperties,
     createContainer,
@@ -6,13 +8,11 @@
   } from '@pmndrs/uikit/internals'
   import { createParent, useParent } from '$lib/useParent'
   import { usePropertySignals } from '$lib/usePropSignals'
-  import { Group } from 'three'
-  import { T, currentWritable } from '@threlte/core'
+  import { useInternals, type ContainerRef } from '$lib/useInternals'
   import AddHandlers from './AddHandlers.svelte'
-  import { useInternals, type ComponentInternals } from '$lib/useInternals'
 
   type $$Props = ContainerProperties & {
-    ref?: ComponentInternals<ContainerProperties>
+    ref?: ContainerRef
     name?: string
   } & EventHandlers
 

@@ -1,14 +1,14 @@
 <script lang="ts">
   import { Group, type Texture } from 'three'
+  import { T, currentWritable } from '@threlte/core'
   import { createImage, type EventHandlers, type ImageProperties } from '@pmndrs/uikit/internals'
   import { createParent, useParent } from '$lib/useParent'
-  import { T, currentWritable } from '@threlte/core'
   import { usePropertySignals } from '$lib/usePropSignals'
+  import { useInternals, type ImageRef } from '$lib/useInternals'
   import AddHandlers from './AddHandlers.svelte'
-  import { useInternals, type ComponentInternals } from '$lib/useInternals'
 
   type $$Props = ImageProperties & {
-    ref?: ComponentInternals<ImageProperties>
+    ref?: ImageRef
     name?: string
     src?: string | Texture
   } & EventHandlers

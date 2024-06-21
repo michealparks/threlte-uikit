@@ -1,14 +1,14 @@
 <script lang="ts">
+  import { Object3D } from 'three'
+  import { T, currentWritable } from '@threlte/core'
   import { type EventHandlers, type SvgProperties, createSvg } from '@pmndrs/uikit/internals'
   import { createParent, useParent } from '$lib/useParent'
-  import { T, currentWritable } from '@threlte/core'
-  import { Object3D } from 'three'
   import { usePropertySignals } from '$lib/usePropSignals'
+  import { useInternals, type SvgRef } from '$lib/useInternals'
   import AddHandlers from './AddHandlers.svelte'
-  import { useInternals, type ComponentInternals } from '$lib/useInternals'
 
   type $$Props = SvgProperties & {
-    ref?: ComponentInternals<SvgProperties>
+    ref?: SvgRef
     name?: string
     src: string
   } & EventHandlers

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { Group } from 'three'
+  import { T, currentWritable } from '@threlte/core'
   import { signal } from '@preact/signals-core'
   import {
     createText,
@@ -6,16 +8,14 @@
     type FontFamilies,
     type TextProperties,
   } from '@pmndrs/uikit/internals'
-  import { useParent } from '$lib/useParent'
-  import { T, currentWritable } from '@threlte/core'
-  import { Group } from 'three'
   import { useFontFamilies } from '$lib/useFontFamilies'
+  import { useParent } from '$lib/useParent'
   import { usePropertySignals } from '$lib/usePropSignals'
+  import { useInternals, type TextRef } from '$lib/useInternals'
   import AddHandlers from './AddHandlers.svelte'
-  import { useInternals, type ComponentInternals } from '$lib/useInternals'
 
   type $$Props = TextProperties & {
-    ref?: ComponentInternals<TextProperties>
+    ref?: TextRef
     name?: string
     text: string
   } & EventHandlers

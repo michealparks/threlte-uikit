@@ -1,7 +1,6 @@
 import { render } from '@threlte/test'
 import { describe, expect, it } from 'vitest'
 import Subject from './Providers.spec.svelte'
-import { fontFamilies, getUiKitObject } from './util'
 
 describe('Providers', () => {
   it('provides a default properties context', () => {
