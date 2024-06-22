@@ -1,17 +1,12 @@
 <script lang="ts">
   import { Root, Container, Text, Image, Content, SVG } from '$lib'
-  import { T, useTask, useThrelte } from '@threlte/core'
+  import { T, useTask } from '@threlte/core'
   import { PerfMonitor } from '@threlte/extras'
   import { OrbitControls, interactivity } from '@threlte/extras'
   import Fullscreen from './Fullscreen.svelte'
   // import { Inspector } from 'three-inspect'
 
-  const { renderer } = useThrelte()
-  renderer.localClippingEnabled = true
-
-  const ctx = interactivity()
-
-  setTimeout(() => console.log(ctx), 1000)
+  interactivity()
 
   let val = 0
   let elapsed = 0
@@ -24,15 +19,14 @@
 
 <PerfMonitor />
 
+<Fullscreen />
+
 <T.PerspectiveCamera
-  name="myCam"
   makeDefault
   position={[2, 2, 5]}
   on:create={({ ref }) => ref.lookAt(0, 0, 0)}
 >
   <OrbitControls />
-
-  <Fullscreen />
 </T.PerspectiveCamera>
 
 <!-- <Inspector /> -->

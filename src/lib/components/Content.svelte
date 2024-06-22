@@ -21,23 +21,14 @@
   const parent = useParent()
   const outerRef = currentWritable(new Object3D())
   const innerRef = currentWritable(new Object3D())
-  const propertySignals = usePropertySignals({ ...$$restProps })
+  const { style, properties, defaults } = usePropertySignals<ContentProperties>()
   $: props = { ...$$restProps }
-  $: propertySignals.properties.value = props
+  $: properties.value = props
 
-  $: internals = createContent(
-    $parent,
-    propertySignals.style,
-    propertySignals.properties,
-    propertySignals.default,
-    outerRef,
-    innerRef
-  )
+  const internals = createContent(parent, style, properties, defaults, outerRef, innerRef)
   $: internals.interactionPanel.name = name ?? ''
 
-  export let ref: ContentRef | undefined = undefined
-
-  $: ref = useInternals<ContentProperties>(internals, propertySignals.style, $parent.root.pixelSize)
+  export let ref = useInternals<ContentProperties>(internals, style, parent.root.pixelSize)
 
   createParent(undefined!)
 </script>

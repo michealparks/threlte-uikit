@@ -38,18 +38,18 @@
   let outerRef = currentWritable(new Group())
   let innerRef = currentWritable(new Group())
 
-  const propertySignals = usePropertySignals($$restProps)
+  const { style, properties, defaults } = usePropertySignals<RootProperties>()
   $: props = { ...$$restProps }
-  $: propertySignals.properties.value = props
+  $: properties.value = props
 
   const pixelSizeSignal = signal<Signal<number | undefined> | number | undefined>(undefined)
   $: pixelSizeSignal.value = pixelSize
 
   const internals = createRoot(
     computed(() => readReactive(pixelSizeSignal.value) ?? DEFAULT_PIXEL_SIZE),
-    propertySignals.style,
-    propertySignals.properties,
-    propertySignals.default,
+    style,
+    properties,
+    defaults,
     outerRef,
     innerRef,
     () => camera.current,
@@ -69,7 +69,7 @@
   )
   $: internals.interactionPanel.name = name ?? ''
 
-  export let ref = useInternals(internals, propertySignals.style, internals.root.pixelSize)
+  export let ref = useInternals(internals, style, internals.root.pixelSize)
 
   useTask(
     (delta) => {
