@@ -35,10 +35,6 @@
   <Fullscreen />
 </T.PerspectiveCamera>
 
-<T.Mesh on:click={() => alert('hi')}>
-  <T.BoxGeometry></T.BoxGeometry>
-</T.Mesh>
-
 <!-- <Inspector /> -->
 
 <T.Group>
