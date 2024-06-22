@@ -1,32 +1,18 @@
 <svelte:options accessors />
 
-<script lang="ts">
-  import {
-    Root,
-    Container,
-    Text,
-    provideDefaultProperties,
-    provideFontFamilies,
-    type AllOptionalProperties,
-    type FontFamilies,
-    type RootRef,
-    type ContainerRef,
-    type TextRef,
-  } from '$lib'
+<script>
+  import { Root, Container, Text, provideDefaultProperties, provideFontFamilies } from '$lib'
 
-  export let style: AllOptionalProperties | undefined = undefined
-  export let fontFamilies: FontFamilies | undefined = undefined
+  export let root
+  export let container
+  export let text
 
-  export let root: RootRef
-  export let container: ContainerRef
-  export let text: TextRef
-
-  if (style) {
-    provideDefaultProperties(style)
+  if ($$props.style) {
+    provideDefaultProperties($$props.style)
   }
 
-  if (fontFamilies) {
-    provideFontFamilies(fontFamilies)
+  if ($$props.fontFamilies) {
+    provideFontFamilies($$props.fontFamilies)
   }
 </script>
 
