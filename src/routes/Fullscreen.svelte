@@ -1,15 +1,10 @@
 <script lang="ts">
   import { Fullscreen, Container, Text } from '$lib'
-  import { Portal, PortalTarget } from './Portal'
 
   let active = false
 </script>
 
 <Fullscreen>
-  <PortalTarget />
-</Fullscreen>
-
-<Portal>
   <Container alignItems="flex-end">
     <Container
       backgroundColor={active ? 'black' : '#eee'}
@@ -28,4 +23,4 @@
       />
     </Container>
   </Container>
-</Portal>
+</Fullscreen>
