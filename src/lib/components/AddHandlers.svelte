@@ -7,7 +7,6 @@
   export let ref: Object3D
   export let userHandlers: EventHandlers
   export let handlers: Signal<EventHandlers> | undefined = undefined
-  export let allowSkippingChildren = false
 
   const eventHandlerKeys: Array<keyof EventHandlers> = [
     'onClick',
@@ -44,24 +43,29 @@
   $: allHandlers = createHandlers(userHandlers, $handlers)
 </script>
 
-{#if allowSkippingChildren && handlers === undefined}
-  <!-- -->
+{#if allHandlers === undefined}
+  <T
+    is={ref}
+    matrixAutoUpdate={false}
+  >
+    <slot />
+  </T>
 {:else}
   <T
     is={ref}
     matrixAutoUpdate={false}
-    on:click={allHandlers?.onClick}
-    on:contextmenu={allHandlers?.onContextMenu}
-    on:dblclick={allHandlers?.onDoubleClick}
-    on:pointerdown={allHandlers?.onPointerDown}
-    on:pointerenter={allHandlers?.onPointerEnter}
-    on:pointerleave={allHandlers?.onPointerLeave}
-    on:pointermissed={allHandlers?.onPointerMissed}
-    on:pointermove={allHandlers?.onPointerMove}
-    on:pointerout={allHandlers?.onPointerOut}
-    on:pointerover={allHandlers?.onPointerOver}
-    on:pointerup={allHandlers?.onPointerUp}
-    on:wheel={allHandlers?.onWheel}
+    on:click={allHandlers.onClick}
+    on:contextmenu={allHandlers.onContextMenu}
+    on:dblclick={allHandlers.onDoubleClick}
+    on:pointerdown={allHandlers.onPointerDown}
+    on:pointerenter={allHandlers.onPointerEnter}
+    on:pointerleave={allHandlers.onPointerLeave}
+    on:pointermissed={allHandlers.onPointerMissed}
+    on:pointermove={allHandlers.onPointerMove}
+    on:pointerout={allHandlers.onPointerOut}
+    on:pointerover={allHandlers.onPointerOver}
+    on:pointerup={allHandlers.onPointerUp}
+    on:wheel={allHandlers.onWheel}
   >
     <slot />
   </T>

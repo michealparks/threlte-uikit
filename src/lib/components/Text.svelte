@@ -51,7 +51,6 @@
 </script>
 
 <AddHandlers
-  allowSkippingChildren
   userHandlers={$$restProps}
   handlers={internals.handlers}
   ref={$outerRef}

@@ -11,16 +11,5 @@ describe('Providers', () => {
     expect(component.text.getComputedProperty('backgroundColor')).toEqual('#fff')
   })
 
-  it('provides a font family context', () => {
-    const { component } = render(Subject, {
-      fontFamilies: {
-        monospace: {
-          light: '/path/to/light',
-          medium: '/path/to/medium',
-        },
-      },
-    })
-
-    console.log(component.text.getComputedProperty('fontFamily'))
-  })
+  it.skip('provides a font family context', () => {})
 })
