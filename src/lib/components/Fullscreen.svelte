@@ -1,80 +1,58 @@
 <script lang="ts">
-  import Base from './Shared/Base.svelte'
-  import type { EventHandlers, InheritableRootProperties } from '@pmndrs/uikit/internals'
-  import { Fullscreen } from '@pmndrs/uikit'
-  import { useThrelte, useTask, watch } from '@threlte/core'
-  import { useFontFamilies } from '../useFontFamilies'
-  import { useDefaultProperties } from '../useDefaultProperties'
-  import { eventPropNames } from './Shared/events'
-  import type { Writable } from 'type-fest'
+  import type { PerspectiveCamera } from 'three'
+  import { useThrelte, T } from '@threlte/core'
+  import { batch, signal } from '@preact/signals-core'
+  import {
+    type FullscreenProperties,
+    type EventHandlers,
+    updateSizeFullscreen,
+  } from '@pmndrs/uikit/internals'
+  import type { RootRef } from '$lib/useInternals'
+  import Root from './Root.svelte'
 
-  type Properties = Writable<InheritableRootProperties>
-  type $$Props = {
+  type $$Props = FullscreenProperties & {
+    ref?: RootRef
     name?: string
     distanceToCamera?: number
-    ref?: Fullscreen
-  } & Properties &
-    EventHandlers
+    pixelSize?: number
+  } & EventHandlers
 
-  export let name: string | undefined = undefined
-  export let active: Properties['active'] = undefined
-  export let hover: Properties['hover'] = undefined
+  export let pixelSize: $$Props['pixelSize'] = undefined
   export let distanceToCamera: $$Props['distanceToCamera'] = undefined
+  export let ref: $$Props['ref'] = undefined
 
-  const { renderer, scheduler, renderStage, size, shouldRender } = useThrelte()
+  const { size, camera } = useThrelte()
 
-  const defaultProps = useDefaultProperties()
-  const fontFamilies = useFontFamilies()
-  const events: EventHandlers = {}
+  const xSizeSignal = signal(1)
+  const ySizeSignal = signal(1)
+  const pixelSizeSignal = signal(1)
 
-  let props: Properties = {}
+  $: if (pixelSize !== undefined) pixelSizeSignal.value = pixelSize
+  $: distance = distanceToCamera ? distanceToCamera : ($camera as PerspectiveCamera).near + 0.1
 
   $: {
-    props = {}
-    for (const key of Object.keys($$restProps)) {
-      if (eventPropNames.includes(key as keyof EventHandlers)) {
-        events[key as keyof EventHandlers] = $$restProps[key]
-      } else {
-        props[key as keyof Properties] = $$restProps[key]
-      }
-    }
-    if (active) props.active = active
-    if (hover) props.hover = hover
+    $camera, $size, distance
+    batch(() =>
+      updateSizeFullscreen(
+        xSizeSignal,
+        ySizeSignal,
+        pixelSizeSignal,
+        distance,
+        $camera,
+        $size.height
+      )
+    )
   }
-
-  export const ref = new Fullscreen(
-    renderer,
-    distanceToCamera,
-    $$restProps,
-    defaultProps,
-    fontFamilies
-  )
-  $: ref.setProperties(props)
-  $: if (name) ref.name = name
-
-  watch(size, () => {
-    // @TODO why on the next frame?
-    requestAnimationFrame(() => ref.updateSize())
-  })
-
-  useTask(
-    (delta) => {
-      if (shouldRender()) {
-        ref.update(delta)
-      }
-    },
-    {
-      autoInvalidate: false,
-      stage: scheduler.createStage(Symbol('uikit-stage'), { before: renderStage }),
-    }
-  )
 </script>
 
-<Base
-  is={ref}
-  {events}
-  active={active !== undefined}
-  hover={hover !== undefined}
->
-  <slot />
-</Base>
+<T.Group position.z={-distance}>
+  <Root
+    bind:ref
+    {...$$restProps}
+    sizeX={xSizeSignal}
+    sizeY={ySizeSignal}
+    pixelSize={pixelSizeSignal}
+  >
+    <slot />
+  </Root>
+</T.Group>

@@ -1,57 +1,83 @@
 <script lang="ts">
-  import Base from './Shared/Base.svelte'
-  import type { EventHandlers, InheritableRootProperties } from '@pmndrs/uikit/internals'
-  import { Root } from '@pmndrs/uikit'
-  import { signal } from '@preact/signals-core'
-  import { useThrelte, useTask } from '@threlte/core'
-  import { useFontFamilies } from '../useFontFamilies'
-  import { useDefaultProperties } from '../useDefaultProperties'
-  import { eventPropNames } from './Shared/events'
-  import type { Writable } from 'type-fest'
+  import { Group } from 'three'
+  import { T, useThrelte, useTask, currentWritable } from '@threlte/core'
+  import { type Signal, computed, signal } from '@preact/signals-core'
+  import {
+    DEFAULT_PIXEL_SIZE,
+    type EventHandlers,
+    type RootProperties,
+    type WithReactive,
+    createRoot,
+    readReactive,
+    reversePainterSortStable,
+  } from '@pmndrs/uikit/internals'
+  import { createParent } from '$lib/useParent'
+  import { usePropertySignals } from '$lib/usePropSignals'
+  import { useInternals, type RootRef } from '$lib/useInternals'
+  import AddHandlers from './AddHandlers.svelte'
 
-  type Properties = Writable<InheritableRootProperties>
-  type $$Props = {
-    name?: string
-    ref?: Root
-  } & Properties &
-    EventHandlers
+  type $$Props = RootProperties &
+    WithReactive<{ pixelSize?: number }> & {
+      ref?: RootRef
+      name?: string
+    } & EventHandlers
 
-  export let name: string | undefined = undefined
-  export let active: Properties['active'] = undefined
-  export let hover: Properties['hover'] = undefined
+  export let pixelSize: $$Props['pixelSize'] = undefined
+  export let name: $$Props['name'] = undefined
 
-  const { camera, renderer, shouldRender, scheduler, renderStage } = useThrelte()
+  const { camera, renderer, shouldRender, scheduler, renderStage, invalidate } = useThrelte()
 
-  const cameraSignal = signal(camera.current)
-  $: cameraSignal.value = $camera
+  // @TODO(mp) Remove optional once @threlte/test supports webgl2 context mocking.
+  renderer.setTransparentSort?.(reversePainterSortStable)
+  renderer.localClippingEnabled = true
 
-  const defaultProps = useDefaultProperties()
-  const fontFamilies = useFontFamilies()
-  const events: EventHandlers = {}
+  const onFrameSet = new Set<(delta: number) => void>()
 
-  let props: Properties = {}
+  let whileOnFrameRef = false
 
-  $: {
-    props = {}
-    for (const key of Object.keys($$restProps)) {
-      if (eventPropNames.includes(key as keyof EventHandlers)) {
-        events[key as keyof EventHandlers] = $$restProps[key]
-      } else {
-        props[key as keyof Properties] = $$restProps[key]
+  let outerRef = currentWritable(new Group())
+  let innerRef = currentWritable(new Group())
+
+  const propertySignals = usePropertySignals($$restProps)
+  $: propertySignals.properties.value = $$restProps
+
+  const pixelSizeSignal = signal<Signal<number | undefined> | number | undefined>(undefined)
+  $: pixelSizeSignal.value = pixelSize
+
+  const internals = createRoot(
+    computed(() => readReactive(pixelSizeSignal.value) ?? DEFAULT_PIXEL_SIZE),
+    propertySignals.style,
+    propertySignals.properties,
+    propertySignals.default,
+    outerRef,
+    innerRef,
+    () => camera.current,
+    renderer,
+    onFrameSet,
+    () => {
+      if (whileOnFrameRef) {
+        // request render unnecassary -> already rendering
+        return
       }
-    }
-    if (active) props.active = active
-    if (hover) props.hover = hover
-  }
 
-  export const ref = new Root(cameraSignal, renderer, undefined, defaultProps, fontFamilies)
-  $: ref.setProperties(props)
-  $: if (name) ref.name = name
+      // not rendering -> requesting a new frame
+      invalidate()
+    },
+    // requestFrame = invalidate, because invalidate always causes another frame
+    invalidate
+  )
+  $: internals.interactionPanel.name = name ?? ''
+
+  export const ref = useInternals(internals, propertySignals.style, internals.root.pixelSize)
 
   useTask(
     (delta) => {
       if (shouldRender()) {
-        ref.update(delta)
+        whileOnFrameRef = true
+        for (const onFrame of onFrameSet) {
+          onFrame(delta)
+        }
+        whileOnFrameRef = false
       }
     },
     {
@@ -59,13 +85,20 @@
       stage: scheduler.createStage(Symbol('uikit-stage'), { before: renderStage }),
     }
   )
+
+  createParent(internals)
 </script>
 
-<Base
-  is={ref}
-  {events}
-  active={active !== undefined}
-  hover={hover !== undefined}
+<AddHandlers
+  userHandlers={$$restProps}
+  handlers={internals.handlers}
+  ref={$outerRef}
 >
-  <slot />
-</Base>
+  <T is={internals.interactionPanel} />
+  <T
+    matrixAutoUpdate={false}
+    is={$innerRef}
+  >
+    <slot />
+  </T>
+</AddHandlers>

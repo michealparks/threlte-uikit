@@ -1,10 +1,14 @@
+<svelte:options accessors />
+
 <script lang="ts">
-  import Container from '../Container.svelte'
-  import Root from '../Root.svelte'
+  import { type ContainerRef, Container, Root } from '$lib'
+
+  export let ref: ContainerRef
 </script>
 
 <Root>
   <Container
+    bind:ref
     name="container"
     {...$$restProps}
   />

@@ -1,57 +1,59 @@
 <script lang="ts">
-  import { Text } from '@pmndrs/uikit'
-  import Base from './Shared/Base.svelte'
+  import { Group } from 'three'
+  import { T, currentWritable } from '@threlte/core'
   import { signal } from '@preact/signals-core'
-  import type {
-    EventHandlers,
-    InheritableTextProperties,
-    TextProperties,
+  import {
+    createText,
+    type EventHandlers,
+    type FontFamilies,
+    type TextProperties,
   } from '@pmndrs/uikit/internals'
-  import { useDefaultProperties } from '$lib/useDefaultProperties'
-  import { eventPropNames } from './Shared/events'
-  import type { Writable } from 'type-fest'
+  import { useFontFamilies } from '$lib/useFontFamilies'
+  import { useParent } from '$lib/useParent'
+  import { usePropertySignals } from '$lib/usePropSignals'
+  import { useInternals, type TextRef } from '$lib/useInternals'
+  import AddHandlers from './AddHandlers.svelte'
 
-  type $$Props = {
-    text: string
+  type $$Props = TextProperties & {
+    ref?: TextRef
     name?: string
-    ref?: Text
-  } & InheritableTextProperties &
-    EventHandlers
+    text: string
+  } & EventHandlers
 
   export let name: string | undefined = undefined
-  export let active: InheritableTextProperties['active'] = undefined
-  export let hover: InheritableTextProperties['hover'] = undefined
   export let text: $$Props['text']
 
-  const defaultProps = useDefaultProperties()
-  const events: EventHandlers = {}
+  const parent = useParent()
+  const outerRef = currentWritable(new Group())
+
+  const propertySignals = usePropertySignals($$restProps)
+  $: propertySignals.properties.value = $$restProps
 
   const textSignal = signal(text)
   $: textSignal.value = text
 
-  let props: Writable<TextProperties> = {}
+  const fontContext = useFontFamilies()
+  const fontFamilies = signal<FontFamilies | undefined>(fontContext)
+  $: fontFamilies.value = fontContext
 
-  $: {
-    props = {}
-    for (const key of Object.keys($$restProps)) {
-      if (eventPropNames.includes(key as keyof EventHandlers)) {
-        events[key as keyof EventHandlers] = $$restProps[key]
-      } else {
-        props[key] = $$restProps[key]
-      }
-    }
-    if (active) props.active = active
-    if (hover) props.hover = hover
-  }
+  const internals = createText(
+    parent,
+    textSignal,
+    fontFamilies,
+    propertySignals.style,
+    propertySignals.properties,
+    propertySignals.default,
+    outerRef
+  )
+  $: internals.interactionPanel.name = name ?? ''
 
-  export const ref = new Text(textSignal, undefined, defaultProps)
-  $: ref.setProperties(props)
-  $: if (name) ref.name = name
+  export const ref = useInternals(internals, propertySignals.style, parent.root.pixelSize)
 </script>
 
-<Base
-  is={ref}
-  {events}
-  active={active !== undefined}
-  hover={hover !== undefined}
-/>
+<AddHandlers
+  userHandlers={$$restProps}
+  handlers={internals.handlers}
+  ref={$outerRef}
+>
+  <T is={internals.interactionPanel} />
+</AddHandlers>

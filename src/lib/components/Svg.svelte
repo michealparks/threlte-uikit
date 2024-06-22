@@ -1,53 +1,52 @@
 <script lang="ts">
-  import { Svg } from '@pmndrs/uikit'
-  import Base from './Shared/Base.svelte'
-  import type {
-    EventHandlers,
-    InheritableSvgProperties,
-    SvgProperties,
-  } from '@pmndrs/uikit/internals'
-  import { useDefaultProperties } from '$lib/useDefaultProperties'
-  import { eventPropNames } from './Shared/events'
-  import type { Writable } from 'type-fest'
+  import { Object3D } from 'three'
+  import { T, currentWritable } from '@threlte/core'
+  import { type EventHandlers, type SvgProperties, createSvg } from '@pmndrs/uikit/internals'
+  import { createParent, useParent } from '$lib/useParent'
+  import { usePropertySignals } from '$lib/usePropSignals'
+  import { useInternals, type SvgRef } from '$lib/useInternals'
+  import AddHandlers from './AddHandlers.svelte'
 
-  type $$Props = {
+  type $$Props = SvgProperties & {
+    ref?: SvgRef
     name?: string
-    ref?: Svg
-  } & InheritableSvgProperties &
-    EventHandlers
+    src: string
+  } & EventHandlers
 
   export let name: string | undefined = undefined
-  export let active: InheritableSvgProperties['active'] = undefined
-  export let hover: InheritableSvgProperties['hover'] = undefined
 
-  const defaultProps = useDefaultProperties()
-  const events: EventHandlers = {}
+  const parent = useParent()
+  const outerRef = currentWritable(new Object3D())
+  const innerRef = currentWritable(new Object3D())
+  const propertySignals = usePropertySignals($$restProps)
+  $: propertySignals.properties.value = $$restProps
 
-  let props: Writable<SvgProperties> = {}
+  const internals = createSvg(
+    parent,
+    propertySignals.style,
+    propertySignals.properties,
+    propertySignals.default,
+    outerRef,
+    innerRef
+  )
+  $: internals.interactionPanel.name = name ?? ''
 
-  $: {
-    props = {}
-    for (const key of Object.keys($$restProps)) {
-      if (eventPropNames.includes(key as keyof EventHandlers)) {
-        events[key as keyof EventHandlers] = $$restProps[key]
-      } else {
-        props[key as keyof SvgProperties] = $$restProps[key]
-      }
-    }
-    if (active) props.active = active
-    if (hover) props.hover = hover
-  }
+  export const ref = useInternals(internals, propertySignals.style, parent.root.pixelSize)
 
-  export const ref = new Svg(undefined, defaultProps)
-  $: ref.setProperties(props)
-  $: if (name) ref.name = name
+  createParent(internals)
 </script>
 
-<Base
-  is={ref}
-  {events}
-  active={active !== undefined}
-  hover={hover !== undefined}
+<AddHandlers
+  userHandlers={$$restProps}
+  ref={$outerRef}
+  handlers={internals.handlers}
 >
-  <slot />
-</Base>
+  <T is={internals.interactionPanel} />
+  <T is={internals.centerGroup} />
+  <T
+    is={$innerRef}
+    matrixAutoUpdate={false}
+  >
+    <slot />
+  </T>
+</AddHandlers>
