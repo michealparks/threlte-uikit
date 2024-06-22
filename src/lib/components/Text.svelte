@@ -26,8 +26,9 @@
   const parent = useParent()
   const outerRef = currentWritable(new Group())
 
-  const propertySignals = usePropertySignals($$restProps)
-  $: propertySignals.properties.value = $$restProps
+  const propertySignals = usePropertySignals({ ...$$restProps })
+  $: props = { ...$$restProps }
+  $: propertySignals.properties.value = props
 
   const textSignal = signal(text)
   $: textSignal.value = text
@@ -36,8 +37,8 @@
   const fontFamilies = signal<FontFamilies | undefined>(fontContext)
   $: fontFamilies.value = fontContext
 
-  const internals = createText(
-    parent,
+  $: internals = createText(
+    $parent,
     textSignal,
     fontFamilies,
     propertySignals.style,
@@ -47,11 +48,13 @@
   )
   $: internals.interactionPanel.name = name ?? ''
 
-  export let ref = useInternals(internals, propertySignals.style, parent.root.pixelSize)
+  export let ref: TextRef | undefined = undefined
+
+  $: ref = useInternals(internals, propertySignals.style, $parent.root.pixelSize)
 </script>
 
 <AddHandlers
-  userHandlers={$$restProps}
+  userHandlers={props}
   handlers={internals.handlers}
   ref={$outerRef}
 >

@@ -103,20 +103,12 @@ export const useInternals = <T, Additional = object>(
   additional?: Additional
 ): ComponentInternals<T> => {
   const subscriptions: Subscriptions = []
+
   initialize(internals.initializers, subscriptions)
+
   onMount(() => {
     return () => unsubscribeSubscriptions(subscriptions)
   })
-
-  const {
-    scrollPosition,
-    paddingInset,
-    borderInset,
-    relativeCenter,
-    size,
-    maxScrollPosition,
-    interactionPanel,
-  } = internals
 
   return {
     setStyle: (style: T | undefined) => (styleSignal.value = style),
@@ -126,15 +118,15 @@ export const useInternals = <T, Additional = object>(
         internals.mergedProperties.value.read<T[K] | undefined>(key as string, undefined)
       ),
     pixelSize,
-    borderInset,
-    paddingInset,
-    center: relativeCenter,
-    maxScrollPosition,
-    size,
+    borderInset: internals.borderInset,
+    paddingInset: internals.paddingInset,
+    center: internals.relativeCenter,
+    maxScrollPosition: internals.maxScrollPosition,
+    size: internals.size,
     get interactionPanel() {
-      return 'isMesh' in interactionPanel ? interactionPanel : interactionPanel.current
+      return internals.interactionPanel
     },
-    scrollPosition,
+    scrollPosition: internals.scrollPosition,
     isClipped: internals.isClipped,
     ...additional,
   }

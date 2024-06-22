@@ -21,11 +21,12 @@
   const parent = useParent()
   const outerRef = currentWritable(new Group())
   const innerRef = currentWritable(new Group())
-  const propertySignals = usePropertySignals($$restProps)
-  $: propertySignals.properties.value = $$restProps
+  const propertySignals = usePropertySignals({ ...$$restProps })
+  $: props = { ...$$restProps }
+  $: propertySignals.properties.value = props
 
-  const internals = createContainer(
-    parent,
+  $: internals = createContainer(
+    $parent,
     propertySignals.style,
     propertySignals.properties,
     propertySignals.default,
@@ -34,17 +35,20 @@
   )
   $: internals.interactionPanel.name = name ?? ''
 
-  export let ref = useInternals<ContainerProperties>(
+  export let ref: ContainerRef | undefined = undefined
+
+  $: ref = useInternals<ContainerProperties>(
     internals,
     propertySignals.style,
-    parent.root.pixelSize
+    $parent.root.pixelSize
   )
 
-  createParent(internals)
+  const parentContext = createParent(internals)
+  $: parentContext.set(internals)
 </script>
 
 <AddHandlers
-  userHandlers={$$restProps}
+  userHandlers={props}
   handlers={internals.handlers}
   ref={$outerRef}
 >

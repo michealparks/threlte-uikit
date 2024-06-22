@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Object3D } from 'three'
+  import type { BoxGeometry, Object3D } from 'three'
   import { T } from '@threlte/core'
   import type { Signal } from '@preact/signals-core'
   import { type EventHandlers, addHandler } from '@pmndrs/uikit/internals'
@@ -40,17 +40,12 @@
     return result
   }
 
+  let allHandlers = createHandlers(userHandlers, $handlers)
   $: allHandlers = createHandlers(userHandlers, $handlers)
+  console.log(ref.uuid, allHandlers)
 </script>
 
-{#if allHandlers === undefined}
-  <T
-    is={ref}
-    matrixAutoUpdate={false}
-  >
-    <slot />
-  </T>
-{:else}
+{#if allHandlers !== undefined}
   <T
     is={ref}
     matrixAutoUpdate={false}
@@ -66,6 +61,13 @@
     on:pointerover={allHandlers.onPointerOver}
     on:pointerup={allHandlers.onPointerUp}
     on:wheel={allHandlers.onWheel}
+  >
+    <slot />
+  </T>
+{:else}
+  <T
+    is={ref}
+    matrixAutoUpdate={false}
   >
     <slot />
   </T>

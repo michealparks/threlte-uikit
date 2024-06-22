@@ -1,13 +1,11 @@
 <script lang="ts">
   import { Fullscreen, Container, Text } from '$lib'
+  import { Portal, PortalTarget } from './Portal'
 
   let active = false
-
-  let ref
-  $: console.log(ref)
 </script>
 
-<Fullscreen bind:ref>
+<Portal id="bob">
   <Container alignItems="flex-end">
     <Container
       backgroundColor={active ? 'black' : '#eee'}
@@ -26,4 +24,8 @@
       />
     </Container>
   </Container>
+</Portal>
+
+<Fullscreen>
+  <PortalTarget id="bob" />
 </Fullscreen>

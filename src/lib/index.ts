@@ -1,6 +1,6 @@
 // Contexts
-export { createDefaultProperties } from './useDefaultProperties'
-export { createFontFamilies } from './useFontFamilies'
+export { provideDefaultProperties } from './useDefaultProperties'
+export { provideFontFamilies } from './useFontFamilies'
 
 export {
   basedOnPreferredColorScheme,

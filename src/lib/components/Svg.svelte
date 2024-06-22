@@ -18,11 +18,12 @@
   const parent = useParent()
   const outerRef = currentWritable(new Object3D())
   const innerRef = currentWritable(new Object3D())
-  const propertySignals = usePropertySignals($$restProps)
-  $: propertySignals.properties.value = $$restProps
+  const propertySignals = usePropertySignals({ ...$$restProps })
+  $: props = { ...$$restProps }
+  $: propertySignals.properties.value = props
 
-  const internals = createSvg(
-    parent,
+  $: internals = createSvg(
+    $parent,
     propertySignals.style,
     propertySignals.properties,
     propertySignals.default,
@@ -31,13 +32,15 @@
   )
   $: internals.interactionPanel.name = name ?? ''
 
-  export let ref = useInternals(internals, propertySignals.style, parent.root.pixelSize)
+  export let ref: SvgRef | undefined = undefined
+
+  $: ref = useInternals(internals, propertySignals.style, $parent.root.pixelSize)
 
   createParent(internals)
 </script>
 
 <AddHandlers
-  userHandlers={$$restProps}
+  userHandlers={props}
   ref={$outerRef}
   handlers={internals.handlers}
 >

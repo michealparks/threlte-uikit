@@ -3,14 +3,9 @@ import { type AllOptionalProperties } from '@pmndrs/uikit/internals'
 import { useDefaultProperties } from './useDefaultProperties'
 
 export const usePropertySignals = <T>(properties: T) => {
-  const propertySignals = {
+  return {
     style: signal<T | undefined>(undefined),
-    properties: signal<T | undefined>(undefined),
-    default: signal<AllOptionalProperties | undefined>(undefined),
+    properties: signal<T | undefined>(properties),
+    default: signal<AllOptionalProperties | undefined>(useDefaultProperties()),
   }
-
-  propertySignals.properties.value = properties
-  propertySignals.default.value = useDefaultProperties()
-
-  return propertySignals
 }
