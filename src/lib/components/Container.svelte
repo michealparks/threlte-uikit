@@ -34,7 +34,7 @@
   )
   $: internals.interactionPanel.name = name ?? ''
 
-  export const ref = useInternals<ContainerProperties>(
+  export let ref = useInternals<ContainerProperties>(
     internals,
     propertySignals.style,
     parent.root.pixelSize
