@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { BoxGeometry, Object3D } from 'three'
+  import type { Object3D } from 'three'
   import { T } from '@threlte/core'
   import type { Signal } from '@preact/signals-core'
   import { type EventHandlers, addHandler } from '@pmndrs/uikit/internals'
@@ -40,9 +40,7 @@
     return result
   }
 
-  let allHandlers = createHandlers(userHandlers, $handlers)
   $: allHandlers = createHandlers(userHandlers, $handlers)
-  console.log(ref.uuid, allHandlers)
 </script>
 
 {#if allHandlers !== undefined}
