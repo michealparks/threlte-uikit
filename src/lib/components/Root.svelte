@@ -68,7 +68,7 @@
   )
   $: internals.interactionPanel.name = name ?? ''
 
-  export const ref = useInternals(internals, propertySignals.style, internals.root.pixelSize)
+  export let ref = useInternals(internals, propertySignals.style, internals.root.pixelSize)
 
   useTask(
     (delta) => {

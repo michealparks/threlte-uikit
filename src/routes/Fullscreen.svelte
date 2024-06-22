@@ -2,9 +2,12 @@
   import { Fullscreen, Container, Text } from '$lib'
 
   let active = false
+
+  let ref
+  $: console.log(ref)
 </script>
 
-<Fullscreen>
+<Fullscreen bind:ref>
   <Container alignItems="flex-end">
     <Container
       backgroundColor={active ? 'black' : '#eee'}
