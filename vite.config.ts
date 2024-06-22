@@ -10,8 +10,11 @@ export default defineConfig({
     environment: 'jsdom',
     server: {
       deps: {
-        inline: ['@preact/signals-core', 'vitest-canvas-mock'],
+        inline: ['@preact/signals-core', '@pmndrs/uikit', 'vitest-canvas-mock'],
       },
     },
+  },
+  ssr: {
+    noExternal: ['@preact/signals-core', '@pmndrs/uikit'],
   },
 })

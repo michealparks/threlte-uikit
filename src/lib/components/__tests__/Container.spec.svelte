@@ -1,9 +1,9 @@
 <svelte:options accessors />
 
-<script lang="ts">
-  import { type ContainerRef, Container, Root } from '$lib'
+<script>
+  import { Container, Root } from '$lib'
 
-  export let ref: ContainerRef
+  export let ref
 </script>
 
 <Root>

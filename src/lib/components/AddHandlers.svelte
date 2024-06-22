@@ -1,12 +1,12 @@
 <script lang="ts">
   import type { Object3D } from 'three'
   import { T } from '@threlte/core'
-  import type { Signal } from '@preact/signals-core'
   import { type EventHandlers, addHandler } from '@pmndrs/uikit/internals'
+  import type { Readable } from 'svelte/store'
 
   export let ref: Object3D
   export let userHandlers: EventHandlers
-  export let handlers: Signal<EventHandlers> | undefined = undefined
+  export let handlers: Readable<EventHandlers>
 
   const eventHandlerKeys: Array<keyof EventHandlers> = [
     'onClick',

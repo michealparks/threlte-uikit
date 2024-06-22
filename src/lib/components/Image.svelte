@@ -18,26 +18,16 @@
   const parent = useParent()
   const outerRef = currentWritable(new Group())
   const innerRef = currentWritable(new Group())
-  const propertySignals = usePropertySignals({ ...$$restProps })
+  const { style, properties, defaults } = usePropertySignals<ImageProperties>()
   $: props = { ...$$restProps }
-  $: propertySignals.properties.value = $$restProps
+  $: properties.value = $$restProps
 
-  $: internals = createImage(
-    $parent,
-    propertySignals.style,
-    propertySignals.properties,
-    propertySignals.default,
-    outerRef,
-    innerRef
-  )
+  const internals = createImage(parent, style, properties, defaults, outerRef, innerRef)
   $: internals.interactionPanel.name = name ?? ''
 
-  export let ref: ImageRef | undefined = undefined
+  export let ref = useInternals(internals, style, parent.root.pixelSize)
 
-  $: ref = useInternals(internals, propertySignals.style, $parent.root.pixelSize)
-
-  const parentContext = createParent(internals)
-  $: parentContext.set(internals)
+  createParent(internals)
 </script>
 
 <AddHandlers
