@@ -5,8 +5,8 @@
     Root,
     Container,
     Text,
-    createDefaultProperties,
-    createFontFamilies,
+    provideDefaultProperties,
+    provideFontFamilies,
     type AllOptionalProperties,
     type FontFamilies,
     type RootRef,
@@ -22,11 +22,11 @@
   export let text: TextRef
 
   if (style) {
-    createDefaultProperties(style)
+    provideDefaultProperties(style)
   }
 
   if (fontFamilies) {
-    createFontFamilies(fontFamilies)
+    provideFontFamilies(fontFamilies)
   }
 </script>
 

@@ -39,7 +39,8 @@
   let innerRef = currentWritable(new Group())
 
   const propertySignals = usePropertySignals($$restProps)
-  $: propertySignals.properties.value = $$restProps
+  $: props = { ...$$restProps }
+  $: propertySignals.properties.value = props
 
   const pixelSizeSignal = signal<Signal<number | undefined> | number | undefined>(undefined)
   $: pixelSizeSignal.value = pixelSize
@@ -90,7 +91,7 @@
 </script>
 
 <AddHandlers
-  userHandlers={$$restProps}
+  userHandlers={props}
   handlers={internals.handlers}
   ref={$outerRef}
 >

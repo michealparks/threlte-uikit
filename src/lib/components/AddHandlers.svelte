@@ -43,14 +43,7 @@
   $: allHandlers = createHandlers(userHandlers, $handlers)
 </script>
 
-{#if allHandlers === undefined}
-  <T
-    is={ref}
-    matrixAutoUpdate={false}
-  >
-    <slot />
-  </T>
-{:else}
+{#if allHandlers !== undefined}
   <T
     is={ref}
     matrixAutoUpdate={false}
@@ -66,6 +59,13 @@
     on:pointerover={allHandlers.onPointerOver}
     on:pointerup={allHandlers.onPointerUp}
     on:wheel={allHandlers.onWheel}
+  >
+    <slot />
+  </T>
+{:else}
+  <T
+    is={ref}
+    matrixAutoUpdate={false}
   >
     <slot />
   </T>

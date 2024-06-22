@@ -1,15 +1,17 @@
 <script lang="ts">
-  import { Root, Container, Text, Image, Content } from '$lib'
+  import { Root, Container, Text, Image, Content, SVG } from '$lib'
   import { T, useTask, useThrelte } from '@threlte/core'
+  import { PerfMonitor } from '@threlte/extras'
   import { OrbitControls, interactivity } from '@threlte/extras'
   import Fullscreen from './Fullscreen.svelte'
-  import Svg from '$lib/components/Svg.svelte'
   // import { Inspector } from 'three-inspect'
 
   const { renderer } = useThrelte()
   renderer.localClippingEnabled = true
 
-  interactivity()
+  const ctx = interactivity()
+
+  setTimeout(() => console.log(ctx), 1000)
 
   let val = 0
   let elapsed = 0
@@ -19,6 +21,8 @@
     val = Math.sin(elapsed * 5) * 20
   })
 </script>
+
+<PerfMonitor />
 
 <T.PerspectiveCamera
   name="myCam"
@@ -47,7 +51,7 @@
       backgroundColor: '#ccc',
     }}
   >
-    <Svg
+    <SVG
       src="./svelte.svg"
       width={30}
       padding={5}

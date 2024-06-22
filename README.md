@@ -54,22 +54,22 @@ The vanilla object may be accessed via the `ref` property.
 
 ## Context providers
 
-- `createDefaultProperties()`
+- `provideDefaultProperties()`
 
 Allows overriding the default properties for all UIKit components and children components of the component in which it is called.
 
 ```ts
-createDefaultProperties({
+provideDefaultProperties({
   margin: 10,
 })
 ```
 
-- `createFontFamilies()`
+- `provideFontFamilies()`
 
 Provides new font families to all children. Instructions for creating fonts that can be consumed by UIKit can be found [here](https://docs.pmnd.rs/uikit/tutorials/custom-fonts).
 
 ```ts
-createFontFamilies({
+provideFontFamilies({
   roboto: {
     light: 'url-to-json',
     medium: 'url-to-json',

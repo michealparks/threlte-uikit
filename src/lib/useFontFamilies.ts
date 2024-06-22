@@ -3,7 +3,7 @@ import type { FontFamilies } from '@pmndrs/uikit/internals'
 
 const contextKey = Symbol('font-family-context')
 
-export const createFontFamilies = (fontFamilies: FontFamilies) => {
+export const provideFontFamilies = (fontFamilies: FontFamilies) => {
   setContext(contextKey, fontFamilies)
 }
 

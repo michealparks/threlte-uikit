@@ -14,7 +14,4 @@ export default defineConfig({
       },
     },
   },
-  ssr: {
-    noExternal: ['three', '@pmndrs/uikit'],
-  },
 })
