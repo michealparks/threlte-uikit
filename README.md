@@ -28,7 +28,7 @@ npm i threlte-uikit
 </T.Group>
 ```
 
-The vanilla object may be accessed via the `ref` property.
+The component internals may be accessed via the `ref` property.
 
 ```svelte
 <Container bind:ref>...</Container>
