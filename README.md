@@ -14,14 +14,8 @@ As with the [vanilla version](https://github.com/pmndrs/uikit/tree/main/packages
 
 ```svelte
 <script>
-  import { T, useThrelte } from '@threlte/core'
-  import { Root, Container, Text, reversePainterSortStable } from 'threlte-uikit'
-
-  const { renderer } = useThrelte()
-
-  // Set local clipping and uikit's sort function.
-  renderer.localClippingEnabled = true
-  renderer.setTransparentSort(reversePainterSortStable)
+  import { T } from '@threlte/core'
+  import { Root, Container, Text } from 'threlte-uikit'
 </script>
 
 <T.Group>
