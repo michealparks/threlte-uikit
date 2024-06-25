@@ -6,20 +6,20 @@ import { readable } from 'svelte/store'
 
 describe('AddHandlers', () => {
   it('fires events', async () => {
-    const onClick = vi.fn()
-    const onPointerEnter = vi.fn()
+    const onclick = vi.fn()
+    const onpointerenter = vi.fn()
     const { scene, fireEvent } = render(Subject, {
       props: {
-        userHandlers: { onClick, onPointerEnter },
+        userHandlers: { onclick, onpointerenter },
         handlers: readable({}),
       },
     })
 
     await fireEvent(scene.getObjectByName('AddHandlers')!, 'click')
-    expect(onClick).toHaveBeenCalledOnce()
+    expect(onclick).toHaveBeenCalledOnce()
 
     await fireEvent(scene.getObjectByName('AddHandlers')!, 'pointerenter')
-    expect(onPointerEnter).toHaveBeenCalledOnce()
+    expect(onpointerenter).toHaveBeenCalledOnce()
   })
 
   it('does not add non-interactive elements to the intersect objects', () => {
