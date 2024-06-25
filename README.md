@@ -72,13 +72,13 @@ provideFontFamilies({
 
 ## Events
 
-Invoke the Threlte [`interactivity`](https://threlte.xyz/docs/reference/extras/interactivity) plugin in the same component or higher than your `<Root>` to enable events. All events supported by `interactivity` are supported. Callback props are used instead of event dispatching to allow Svelte 4 and 5 compatibility.
+Invoke the Threlte [`interactivity`](https://threlte.xyz/docs/reference/extras/interactivity) plugin in the same component or higher than your `<Root>` to enable events. All events supported by `interactivity` are supported. Svelte 5 style callback props are used instead of event dispatching to allow Svelte 4 and 5 compatibility.
 
 ```svelte
 <Container
-  onClick={() => console.log('click')}
-  onPointerEnter={() => console.log('pointer entered')}
-  onPointerLeave={() => console.log('pointer left')}
+  onclick={() => console.log('click')}
+  onpointerenter={() => console.log('pointer entered')}
+  onpointerleave={() => console.log('pointer left')}
 >
   <Text text="I am a button" />
 </Container>
