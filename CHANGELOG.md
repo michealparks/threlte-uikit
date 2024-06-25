@@ -1,5 +1,11 @@
 # temp
 
+## 0.3.0
+
+### Minor Changes
+
+- 1a8041f: Use Svelte 5 event syntax
+
 ## 0.2.1
 
 ### Patch Changes
