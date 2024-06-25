@@ -2,11 +2,8 @@
   import { Group, type OrthographicCamera, type PerspectiveCamera } from 'three'
   import { useThrelte, T, watch } from '@threlte/core'
   import { batch, signal } from '@preact/signals-core'
-  import {
-    type FullscreenProperties,
-    type EventHandlers,
-    updateSizeFullscreen,
-  } from '@pmndrs/uikit/internals'
+  import { type FullscreenProperties, updateSizeFullscreen } from '@pmndrs/uikit/internals'
+  import type { EventHandlers } from '$lib/Events'
   import type { RootRef } from '$lib/useInternals'
   import Root from './Root.svelte'
   import { writable } from 'svelte/store'

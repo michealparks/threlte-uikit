@@ -62,15 +62,15 @@
       active={{
         backgroundColor: 'black',
       }}
-      onClick={() => console.log('click container')}
+      onclick={() => console.log('click container')}
     >
       <Text
         fontSize={40}
         text="hello uikit!"
         color="#fff"
-        onClick={(event) => console.log('click text', event)}
-        onPointerDown={(event) => console.log('pointerdown text', event)}
-        onPointerUp={(event) => console.log('pointerup text', event)}
+        onclick={(event) => console.log('click text', event)}
+        onpointerdown={(event) => console.log('pointerdown text', event)}
+        onpointerup={(event) => console.log('pointerup text', event)}
       />
       <Content
         height={50}

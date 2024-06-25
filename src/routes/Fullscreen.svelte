@@ -11,7 +11,7 @@
       hover={{ backgroundColor: active ? 'black' : '#ddd' }}
       padding={10}
       margin={10}
-      onClick={() => {
+      onclick={() => {
         active = true
         navigator.clipboard.writeText('npm i threlte-uikit')
         setTimeout(() => (active = false), 1000)
