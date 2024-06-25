@@ -1,5 +1,17 @@
 # temp
 
+## 0.2.1
+
+### Patch Changes
+
+- 2a578d1: Attach Fullscreen to camera
+
+## 0.2.0
+
+### Minor Changes
+
+- b362487: Rename providers, fix Svelte 5 reactivity issues
+
 ## 0.1.1
 
 ### Patch Changes
