@@ -4,13 +4,13 @@
   import { type Signal, computed, signal } from '@preact/signals-core'
   import {
     DEFAULT_PIXEL_SIZE,
-    type EventHandlers,
     type RootProperties,
     type WithReactive,
     createRoot,
     readReactive,
     reversePainterSortStable,
   } from '@pmndrs/uikit/internals'
+  import type { EventHandlers } from '$lib/Events'
   import { createParent } from '$lib/useParent'
   import { usePropertySignals } from '$lib/usePropSignals'
   import { useInternals, type RootRef } from '$lib/useInternals'
@@ -69,7 +69,8 @@
   )
   $: internals.interactionPanel.name = name ?? ''
 
-  export let ref = useInternals(internals, style, internals.root.pixelSize)
+  export let ref: RootRef | undefined = undefined
+  ref = useInternals(internals, style, internals.root.pixelSize)
 
   useTask(
     (delta) => {
@@ -88,12 +89,28 @@
   )
 
   createParent(internals)
+
+  const internalsHandlers = internals.handlers
+  $: handlers = $internalsHandlers
 </script>
 
 <AddHandlers
-  userHandlers={props}
-  handlers={internals.handlers}
   ref={$outerRef}
+  userHandlers={props}
+  handlers={{
+    onclick: handlers.onClick,
+    oncontextmenu: handlers.onContextMenu,
+    ondblclick: handlers.onDoubleClick,
+    onpointercancel: handlers.onPointerCancel,
+    onpointerdown: handlers.onPointerDown,
+    onpointerenter: handlers.onPointerEnter,
+    onpointerleave: handlers.onPointerLeave,
+    onpointermissed: handlers.onPointerMissed,
+    onpointermove: handlers.onPointerMove,
+    onpointerout: handlers.onPointerOut,
+    onpointerover: handlers.onPointerOver,
+    onpointerup: handlers.onPointerUp,
+  }}
 >
   <T is={internals.interactionPanel} />
   <T

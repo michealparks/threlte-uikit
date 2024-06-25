@@ -1,64 +1,84 @@
-<script lang="ts">
+<script
+  context="module"
+  lang="ts"
+>
   import type { Object3D } from 'three'
   import { T } from '@threlte/core'
-  import { type EventHandlers, addHandler } from '@pmndrs/uikit/internals'
-  import type { Readable } from 'svelte/store'
-
-  export let ref: Object3D
-  export let userHandlers: EventHandlers
-  export let handlers: Readable<EventHandlers>
+  import type { EventHandlers } from '$lib/Events'
 
   const eventHandlerKeys: Array<keyof EventHandlers> = [
-    'onClick',
-    'onContextMenu',
-    'onDoubleClick',
-    'onPointerCancel',
-    'onPointerDown',
-    'onPointerEnter',
-    'onPointerLeave',
-    'onPointerMissed',
-    'onPointerMove',
-    'onPointerOut',
-    'onPointerOver',
-    'onPointerUp',
-    'onWheel',
-  ]
-
-  const createHandlers = (userFns: EventHandlers, fns?: EventHandlers) => {
-    const result: EventHandlers = { ...fns }
-    const keysLength = eventHandlerKeys.length
-
-    for (let i = 0; i < keysLength; i += 1) {
-      const key = eventHandlerKeys[i]
-      addHandler(key, result, userFns[key])
-    }
-
-    if (Object.keys(result).length === 0) {
-      return undefined
-    }
-
-    return result
-  }
-
-  $: allHandlers = createHandlers(userHandlers, $handlers)
+    'onclick',
+    'oncontextmenu',
+    'ondblclick',
+    'onpointercancel',
+    'onpointerdown',
+    'onpointerenter',
+    'onpointerleave',
+    'onpointermissed',
+    'onpointermove',
+    'onpointerout',
+    'onpointerover',
+    'onpointerup',
+    'onwheel',
+  ] as const
 </script>
 
-{#if allHandlers !== undefined}
+<script lang="ts">
+  export let ref: Object3D
+  export let userHandlers: EventHandlers
+  export let handlers: EventHandlers
+
+  let count = 0
+
+  $: {
+    count = 0
+    for (const key of eventHandlerKeys) {
+      const userHandler = userHandlers[key]
+      const existingHandler = handlers[key]
+
+      if (userHandler !== undefined) {
+        if (existingHandler === undefined) {
+          handlers[key] = userHandler
+        } else {
+          handlers[key] = (event) => {
+            existingHandler?.(event)
+            if ('stopped' in event && event.stopped) {
+              return
+            }
+
+            userHandler(event)
+          }
+        }
+        count += 1
+      } else if (existingHandler !== undefined) {
+        count += 1
+      }
+    }
+  }
+</script>
+
+<!-- 
+  Remove this count checker once the interactivity plugin 
+  checks for "undefined" values when deciding what to add
+  as a raycast object.
+-->
+{#if count > 0}
   <T
     is={ref}
     matrixAutoUpdate={false}
-    on:click={allHandlers.onClick}
-    on:contextmenu={allHandlers.onContextMenu}
-    on:dblclick={allHandlers.onDoubleClick}
-    on:pointerdown={allHandlers.onPointerDown}
-    on:pointerenter={allHandlers.onPointerEnter}
-    on:pointerleave={allHandlers.onPointerLeave}
-    on:pointermissed={allHandlers.onPointerMissed}
-    on:pointermove={allHandlers.onPointerMove}
-    on:pointerout={allHandlers.onPointerOut}
-    on:pointerover={allHandlers.onPointerOver}
-    on:pointerup={allHandlers.onPointerUp}
-    on:wheel={allHandlers.onWheel}
+    on:click={handlers.onclick}
+    on:contextmenu={handlers.oncontextmenu}
+    on:dblclick={handlers.ondblclick}
+    on:pointerdown={handlers.onpointerdown}
+    on:pointerenter={handlers.onpointerenter}
+    on:pointerleave={handlers.onpointerleave}
+    on:pointermissed={handlers.onpointermissed}
+    on:pointermove={handlers.onpointermove}
+    on:pointerout={handlers.onpointerout}
+    on:pointerover={handlers.onpointerover}
+    on:pointerup={handlers.onpointerup}
+    on:wheel={handlers.onwheel}
+    {...handlers}
   >
     <slot />
   </T>

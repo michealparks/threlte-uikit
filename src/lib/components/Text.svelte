@@ -2,12 +2,8 @@
   import { Group } from 'three'
   import { T, currentWritable } from '@threlte/core'
   import { signal } from '@preact/signals-core'
-  import {
-    createText,
-    type EventHandlers,
-    type FontFamilies,
-    type TextProperties,
-  } from '@pmndrs/uikit/internals'
+  import { createText, type FontFamilies, type TextProperties } from '@pmndrs/uikit/internals'
+  import type { EventHandlers } from '$lib/Events'
   import { useFontFamilies } from '$lib/useFontFamilies'
   import { useParent } from '$lib/useParent'
   import { usePropertySignals } from '$lib/usePropSignals'
@@ -48,13 +44,30 @@
   )
   $: internals.interactionPanel.name = name ?? ''
 
-  export let ref = useInternals(internals, style, parent.root.pixelSize)
+  export let ref: TextRef | undefined = undefined
+  ref = useInternals(internals, style, parent.root.pixelSize)
+
+  const internalsHandlers = internals.handlers
+  $: handlers = $internalsHandlers
 </script>
 
 <AddHandlers
-  userHandlers={props}
-  handlers={internals.handlers}
   ref={$outerRef}
+  userHandlers={props}
+  handlers={{
+    onclick: handlers.onClick,
+    oncontextmenu: handlers.onContextMenu,
+    ondblclick: handlers.onDoubleClick,
+    onpointercancel: handlers.onPointerCancel,
+    onpointerdown: handlers.onPointerDown,
+    onpointerenter: handlers.onPointerEnter,
+    onpointerleave: handlers.onPointerLeave,
+    onpointermissed: handlers.onPointerMissed,
+    onpointermove: handlers.onPointerMove,
+    onpointerout: handlers.onPointerOut,
+    onpointerover: handlers.onPointerOver,
+    onpointerup: handlers.onPointerUp,
+  }}
 >
   <T is={internals.interactionPanel} />
 </AddHandlers>

@@ -1,11 +1,8 @@
 <script lang="ts">
   import { Group } from 'three'
   import { T, currentWritable } from '@threlte/core'
-  import {
-    type ContainerProperties,
-    createContainer,
-    type EventHandlers,
-  } from '@pmndrs/uikit/internals'
+  import { type ContainerProperties, createContainer } from '@pmndrs/uikit/internals'
+  import { type EventHandlers } from '$lib/Events'
   import { createParent, useParent } from '$lib/useParent'
   import { usePropertySignals } from '$lib/usePropSignals'
   import { useInternals, type ContainerRef } from '$lib/useInternals'
@@ -29,15 +26,32 @@
   const internals = createContainer(parent, style, properties, defaults, outerRef, innerRef)
   $: internals.interactionPanel.name = name ?? ''
 
-  export let ref = useInternals<ContainerProperties>(internals, style, parent.root.pixelSize)
+  export let ref: ContainerRef | undefined = undefined
+  ref = useInternals<ContainerProperties>(internals, style, parent.root.pixelSize)
 
   createParent(internals)
+
+  const internalsHandlers = internals.handlers
+  $: handlers = $internalsHandlers
 </script>
 
 <AddHandlers
-  userHandlers={props}
-  handlers={internals.handlers}
   ref={$outerRef}
+  userHandlers={props}
+  handlers={{
+    onclick: handlers.onClick,
+    oncontextmenu: handlers.onContextMenu,
+    ondblclick: handlers.onDoubleClick,
+    onpointercancel: handlers.onPointerCancel,
+    onpointerdown: handlers.onPointerDown,
+    onpointerenter: handlers.onPointerEnter,
+    onpointerleave: handlers.onPointerLeave,
+    onpointermissed: handlers.onPointerMissed,
+    onpointermove: handlers.onPointerMove,
+    onpointerout: handlers.onPointerOut,
+    onpointerover: handlers.onPointerOver,
+    onpointerup: handlers.onPointerUp,
+  }}
 >
   <T is={internals.interactionPanel} />
   <T
