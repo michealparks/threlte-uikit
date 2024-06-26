@@ -29,7 +29,7 @@
     "!dist/**/*.spec.*"
   ],
   "dependencies": {
-    "@pmndrs/uikit": "^0.3.8"
+    "@pmndrs/uikit": "^0.3.10"
   },
   "peerDependencies": {
     "@threlte/core": ">=7",

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Root, Container, Text, Image, Content, SVG } from '$lib'
+  import { Root, Container, Text, Image, Content, SVG, Video } from '$lib'
   import { T, useTask } from '@threlte/core'
-  import { PerfMonitor } from '@threlte/extras'
+  import { PerfMonitor, TransformControls } from '@threlte/extras'
   import { OrbitControls, interactivity } from '@threlte/extras'
   import Fullscreen from './Fullscreen.svelte'
   // import { Inspector } from 'three-inspect'
@@ -15,15 +15,20 @@
     elapsed += delta
     val = Math.sin(elapsed * 5) * 20
   })
+
+  let clicked = false
 </script>
 
-<PerfMonitor />
+<svelte:window
+  on:click={() => (clicked = true)}
+  <PerfMonitor
+/>
 
 <Fullscreen />
 
 <T.PerspectiveCamera
   makeDefault
-  position={[2, 2, 5]}
+  position={[5, 5, 10]}
   on:create={({ ref }) => ref.lookAt(0, 0, 0)}
 >
   <OrbitControls />
@@ -41,6 +46,7 @@
     padding={20}
     width={330 + val}
     height={300}
+    backgroundColor="#fff"
     hover={{
       backgroundColor: '#ccc',
     }}
@@ -90,5 +96,22 @@
     />
   </Root>
 </T.Group>
+
+{#if clicked}
+  <TransformControls position.y={3}>
+    <T.Group>
+      <Root
+        height={200}
+        width={400}
+      >
+        <Video
+          autoplay
+          borderRadius={10}
+          src="/BigBuckBunny_320x180.mp4"
+        />
+      </Root>
+    </T.Group>
+  </TransformControls>
+{/if}
 
 <T.DirectionalLight />

@@ -21,7 +21,7 @@
   const innerRef = currentWritable(new Group())
   const { style, properties, defaults } = usePropertySignals<ImageProperties>()
   $: props = { ...$$restProps }
-  $: properties.value = $$restProps
+  $: properties.value = props
 
   const internals = createImage(parent, style, properties, defaults, outerRef, innerRef)
   $: internals.interactionPanel.name = name ?? ''
