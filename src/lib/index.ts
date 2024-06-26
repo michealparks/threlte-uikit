@@ -28,6 +28,7 @@ export { default as Image } from './components/Image.svelte'
 export { default as Root } from './components/Root.svelte'
 export { default as SVG } from './components/Svg.svelte'
 export { default as Text } from './components/Text.svelte'
+export { default as Video } from './components/Video.svelte'
 
 // Refs
 export type { ContainerRef, ContentRef, ImageRef, RootRef, SvgRef, TextRef } from './useInternals'
