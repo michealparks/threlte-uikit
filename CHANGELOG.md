@@ -1,5 +1,11 @@
 # temp
 
+## 0.4.0
+
+### Minor Changes
+
+- 5ed1aad: Add `<Video>` Component
+
 ## 0.3.0
 
 ### Minor Changes
