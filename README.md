@@ -43,6 +43,7 @@ The component internals may be accessed via the `ref` property.
 - [Text](https://docs.pmnd.rs/uikit/getting-started/components-and-properties#text)
 - [SVG](https://docs.pmnd.rs/uikit/getting-started/components-and-properties#svg)
 - [Content](https://docs.pmnd.rs/uikit/getting-started/components-and-properties#content)
+- [Video](https://docs.pmnd.rs/uikit/getting-started/components-and-properties#video)
 
 ## Context providers
 
