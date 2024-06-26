@@ -19,10 +19,8 @@
   let clicked = false
 </script>
 
-<svelte:window
-  on:click={() => (clicked = true)}
-  <PerfMonitor
-/>
+<svelte:window on:click={() => (clicked = true)} />
+<PerfMonitor />
 
 <Fullscreen />
 
