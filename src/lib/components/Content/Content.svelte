@@ -2,18 +2,15 @@
   import { Object3D } from 'three'
   import { T, currentWritable } from '@threlte/core'
   import { type ContentProperties, createContent } from '@pmndrs/uikit/internals'
-  import type { EventHandlers } from '$lib/Events'
   import { createParent, useParent } from '$lib/useParent'
   import { usePropertySignals } from '$lib/usePropSignals'
   import { useInternals, type ContentRef } from '$lib/useInternals'
-  import AddHandlers from './AddHandlers.svelte'
+  import AddHandlers from '../AddHandlers.svelte'
+  import type { Props } from './Content.svelte'
 
-  type $$Props = ContentProperties & {
-    ref?: ContentRef
-    name?: string
-  } & EventHandlers
+  type $$Props = Props
 
-  export let name: $$Props['name'] = undefined
+  export let name: Props['name'] = undefined
 
   const parent = useParent()
   const outerRef = currentWritable(new Object3D())

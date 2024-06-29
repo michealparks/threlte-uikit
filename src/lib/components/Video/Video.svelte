@@ -1,27 +1,21 @@
 <script lang="ts">
-  import Image from './Image.svelte'
+  import Image from '../Image/Image.svelte'
   import { SRGBColorSpace, VideoTexture } from 'three'
   import { useThrelte } from '@threlte/core'
-  import type { VideoProperties } from '@pmndrs/uikit'
   import { setupVideoElementInvalidation, updateVideoElement } from '@pmndrs/uikit/internals'
-  import type { EventHandlers } from '$lib/Events'
-  import type { ImageRef } from '$lib/useInternals'
   import { onDestroy } from 'svelte'
+  import type { Props } from './Video.svelte'
 
-  type $$Props = VideoProperties & {
-    ref?: ImageRef
-    src: string | HTMLVideoElement
-    element?: HTMLVideoElement
-  } & EventHandlers
+  type $$Props = Props
 
-  export let src: $$Props['src']
-  export let ref: $$Props['ref'] = undefined
-  export let autoplay: $$Props['autoplay'] = undefined
-  export let loop: $$Props['loop'] = undefined
-  export let muted: $$Props['muted'] = undefined
-  export let playbackRate: $$Props['playbackRate'] = undefined
-  export let preservesPitch: $$Props['preservesPitch'] = undefined
-  export let volume: $$Props['volume'] = undefined
+  export let src: Props['src']
+  export let ref: Props['ref'] = undefined
+  export let autoplay: Props['autoplay'] = undefined
+  export let loop: Props['loop'] = undefined
+  export let muted: Props['muted'] = undefined
+  export let playbackRate: Props['playbackRate'] = undefined
+  export let preservesPitch: Props['preservesPitch'] = undefined
+  export let volume: Props['volume'] = undefined
 
   const { invalidate } = useThrelte()
 

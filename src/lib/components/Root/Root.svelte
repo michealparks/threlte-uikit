@@ -5,25 +5,20 @@
   import {
     DEFAULT_PIXEL_SIZE,
     type RootProperties,
-    type WithReactive,
     createRoot,
     readReactive,
     reversePainterSortStable,
   } from '@pmndrs/uikit/internals'
-  import type { EventHandlers } from '$lib/Events'
   import { createParent } from '$lib/useParent'
   import { usePropertySignals } from '$lib/usePropSignals'
-  import { useInternals, type RootRef } from '$lib/useInternals'
-  import AddHandlers from './AddHandlers.svelte'
+  import { useInternals } from '$lib/useInternals'
+  import AddHandlers from '../AddHandlers.svelte'
+  import type { Props } from './Root.svelte'
 
-  type $$Props = RootProperties &
-    WithReactive<{ pixelSize?: number }> & {
-      ref?: RootRef
-      name?: string
-    } & EventHandlers
+  type $$Props = Props
 
-  export let pixelSize: $$Props['pixelSize'] = undefined
-  export let name: $$Props['name'] = undefined
+  export let pixelSize: Props['pixelSize'] = undefined
+  export let name: Props['name'] = undefined
 
   const { camera, renderer, shouldRender, scheduler, renderStage, invalidate } = useThrelte()
 
@@ -69,7 +64,7 @@
   )
   $: internals.interactionPanel.name = name ?? ''
 
-  export let ref: RootRef | undefined = undefined
+  export let ref: Props['ref'] = undefined
   ref = useInternals(internals, style, internals.root.pixelSize)
 
   useTask(

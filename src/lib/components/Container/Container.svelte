@@ -1,33 +1,30 @@
 <script lang="ts">
-  import { Group, type Texture } from 'three'
+  import { Group } from 'three'
   import { T, currentWritable } from '@threlte/core'
-  import { createImage, type ImageProperties } from '@pmndrs/uikit/internals'
-  import type { EventHandlers } from '$lib/Events'
+  import { type ContainerProperties, createContainer } from '@pmndrs/uikit/internals'
   import { createParent, useParent } from '$lib/useParent'
   import { usePropertySignals } from '$lib/usePropSignals'
-  import { useInternals, type ImageRef } from '$lib/useInternals'
-  import AddHandlers from './AddHandlers.svelte'
+  import { useInternals, type ContainerRef } from '$lib/useInternals'
+  import AddHandlers from '../AddHandlers.svelte'
+  import type { Props } from './Container.svelte'
 
-  type $$Props = ImageProperties & {
-    ref?: ImageRef
-    name?: string
-    src?: string | Texture
-  } & EventHandlers
+  type $$Props = Props
 
-  export let name: $$Props['name'] = undefined
+  export let name: Props['name'] = undefined
 
   const parent = useParent()
   const outerRef = currentWritable(new Group())
   const innerRef = currentWritable(new Group())
-  const { style, properties, defaults } = usePropertySignals<ImageProperties>()
+  const { style, properties, defaults } = usePropertySignals<ContainerProperties>()
+
   $: props = { ...$$restProps }
   $: properties.value = props
 
-  const internals = createImage(parent, style, properties, defaults, outerRef, innerRef)
+  const internals = createContainer(parent, style, properties, defaults, outerRef, innerRef)
   $: internals.interactionPanel.name = name ?? ''
 
-  export let ref: ImageRef | undefined = undefined
-  ref = useInternals(internals, style, parent.root.pixelSize)
+  export let ref: ContainerRef | undefined = undefined
+  ref = useInternals<ContainerProperties>(internals, style, parent.root.pixelSize)
 
   createParent(internals)
 
@@ -55,8 +52,8 @@
 >
   <T is={internals.interactionPanel} />
   <T
-    is={$innerRef}
     matrixAutoUpdate={false}
+    is={$innerRef}
   >
     <slot />
   </T>

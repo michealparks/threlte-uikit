@@ -1,32 +1,28 @@
 <script lang="ts">
-  import { Object3D } from 'three'
+  import { Group } from 'three'
   import { T, currentWritable } from '@threlte/core'
-  import { type SvgProperties, createSvg } from '@pmndrs/uikit/internals'
-  import type { EventHandlers } from '$lib/Events'
+  import { createImage, type ImageProperties } from '@pmndrs/uikit/internals'
   import { createParent, useParent } from '$lib/useParent'
   import { usePropertySignals } from '$lib/usePropSignals'
-  import { useInternals, type SvgRef } from '$lib/useInternals'
-  import AddHandlers from './AddHandlers.svelte'
+  import { useInternals } from '$lib/useInternals'
+  import AddHandlers from '../AddHandlers.svelte'
+  import type { Props } from './Image.svelte'
 
-  type $$Props = SvgProperties & {
-    ref?: SvgRef
-    name?: string
-    src: string
-  } & EventHandlers
+  type $$Props = Props
 
-  export let name: string | undefined = undefined
+  export let name: Props['name'] = undefined
 
   const parent = useParent()
-  const outerRef = currentWritable(new Object3D())
-  const innerRef = currentWritable(new Object3D())
-  const { style, properties, defaults } = usePropertySignals<SvgProperties>()
+  const outerRef = currentWritable(new Group())
+  const innerRef = currentWritable(new Group())
+  const { style, properties, defaults } = usePropertySignals<ImageProperties>()
   $: props = { ...$$restProps }
   $: properties.value = props
 
-  const internals = createSvg(parent, style, properties, defaults, outerRef, innerRef)
+  const internals = createImage(parent, style, properties, defaults, outerRef, innerRef)
   $: internals.interactionPanel.name = name ?? ''
 
-  export let ref: SvgRef | undefined = undefined
+  export let ref: Props['ref'] = undefined
   ref = useInternals(internals, style, parent.root.pixelSize)
 
   createParent(internals)
@@ -54,7 +50,6 @@
   }}
 >
   <T is={internals.interactionPanel} />
-  <T is={internals.centerGroup} />
   <T
     is={$innerRef}
     matrixAutoUpdate={false}

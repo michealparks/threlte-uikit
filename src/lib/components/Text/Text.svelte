@@ -3,21 +3,17 @@
   import { T, currentWritable } from '@threlte/core'
   import { signal } from '@preact/signals-core'
   import { createText, type FontFamilies, type TextProperties } from '@pmndrs/uikit/internals'
-  import type { EventHandlers } from '$lib/Events'
   import { useFontFamilies } from '$lib/useFontFamilies'
   import { useParent } from '$lib/useParent'
   import { usePropertySignals } from '$lib/usePropSignals'
-  import { useInternals, type TextRef } from '$lib/useInternals'
-  import AddHandlers from './AddHandlers.svelte'
+  import { useInternals } from '$lib/useInternals'
+  import AddHandlers from '../AddHandlers.svelte'
+  import type { Props } from './Text.svelte'
 
-  type $$Props = TextProperties & {
-    ref?: TextRef
-    name?: string
-    text: string
-  } & EventHandlers
+  type $$Props = Props
 
-  export let name: string | undefined = undefined
-  export let text: $$Props['text']
+  export let name: Props['name'] = undefined
+  export let text: Props['text']
 
   const parent = useParent()
   const outerRef = currentWritable(new Group())
@@ -44,7 +40,7 @@
   )
   $: internals.interactionPanel.name = name ?? ''
 
-  export let ref: TextRef | undefined = undefined
+  export let ref: Props['ref'] = undefined
   ref = useInternals(internals, style, parent.root.pixelSize)
 
   const internalsHandlers = internals.handlers
