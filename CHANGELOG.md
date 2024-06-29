@@ -1,5 +1,11 @@
 # temp
 
+## 0.4.1
+
+### Patch Changes
+
+- 4313359: Bump UIKit to 0.3.12
+
 ## 0.4.0
 
 ### Minor Changes
