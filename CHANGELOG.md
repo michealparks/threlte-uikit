@@ -1,5 +1,11 @@
 # temp
 
+## 0.4.2
+
+### Patch Changes
+
+- 4b633e3: Add d.ts exports for components
+
 ## 0.4.1
 
 ### Patch Changes
