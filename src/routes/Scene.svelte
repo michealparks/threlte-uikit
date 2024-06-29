@@ -1,26 +1,29 @@
 <script lang="ts">
-  import { Root, Container, Text, Image, Content, SVG, Video } from '$lib'
+  import { Root, Container, Text, Image, Content, SVG, Video, type RootRef } from '$lib'
   import { T, useTask } from '@threlte/core'
-  import { PerfMonitor, TransformControls } from '@threlte/extras'
   import { OrbitControls, interactivity } from '@threlte/extras'
   import Fullscreen from './Fullscreen.svelte'
-  // import { Inspector } from 'three-inspect'
+  import { Inspector } from 'three-inspect'
 
   interactivity()
 
-  let val = 0
   let elapsed = 0
+
+  let root: RootRef
 
   useTask((delta) => {
     elapsed += delta
-    val = Math.sin(elapsed * 5) * 20
+
+    const d = Math.sin(elapsed * 5) * 20
+    root.setStyle({ width: 330 + d })
   })
 
   let clicked = false
 </script>
 
+<Inspector />
+
 <svelte:window on:click={() => (clicked = true)} />
-<PerfMonitor />
 
 <Fullscreen />
 
@@ -32,17 +35,15 @@
   <OrbitControls />
 </T.PerspectiveCamera>
 
-<!-- <Inspector /> -->
-
 <T.Group>
   <Root
+    bind:ref={root}
     alignItems="center"
     justifyContent="center"
     flexDirection="column"
     borderColor="#555"
     borderWidth={2}
     padding={20}
-    width={330 + val}
     height={300}
     backgroundColor="#fff"
     hover={{
@@ -76,17 +77,6 @@
         onpointerdown={(event) => console.log('pointerdown text', event)}
         onpointerup={(event) => console.log('pointerup text', event)}
       />
-      <Content
-        height={50}
-        width={50}
-        depthAlign="center"
-        keepAspectRatio={false}
-      >
-        <T.Mesh name="thingy">
-          <T.DodecahedronGeometry />
-          <T.WireframeGeometry color="hotpink" />
-        </T.Mesh>
-      </Content>
     </Container>
     <Image
       width="100%"
@@ -95,21 +85,39 @@
   </Root>
 </T.Group>
 
-{#if clicked}
-  <TransformControls position.y={3}>
-    <T.Group>
-      <Root
-        height={200}
-        width={400}
+<T.Group position.x={4}>
+  <Root>
+    <Content
+      width={100}
+      backgroundColor="#eee"
+      depthAlign="back"
+    >
+      <T.Mesh
+        name="thingy"
+        frustumCulled={false}
+        visible
       >
-        <Video
-          autoplay
-          borderRadius={10}
-          src="/BigBuckBunny_320x180.mp4"
-        />
-      </Root>
-    </T.Group>
-  </TransformControls>
+        <T.DodecahedronGeometry />
+        <T.MeshToonMaterial color="turquoise" />
+      </T.Mesh>
+    </Content>
+  </Root>
+</T.Group>
+
+{#if clicked}
+  <T.Group position.y={3}>
+    <Root
+      height={200}
+      width={400}
+    >
+      <Video
+        autoplay
+        borderRadius={10}
+        src="/BigBuckBunny_320x180.mp4"
+      />
+    </Root>
+  </T.Group>
 {/if}
 
 <T.DirectionalLight />
+<T.AmbientLight />
