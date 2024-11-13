@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Group, type PerspectiveCamera } from 'three'
-  import { useThrelte, T, watch, HierarchicalObject } from '@threlte/core'
+  import { useThrelte, T, watch } from '@threlte/core'
   import { batch, signal } from '@preact/signals-core'
   import { updateSizeFullscreen } from '@pmndrs/uikit/internals'
   import Root from '../Root/Root.svelte'
@@ -16,7 +16,7 @@
   let userCamera: Props['camera'] = undefined
   export { userCamera as camera }
 
-  const { size, camera: defaultCamera } = useThrelte()
+  const { scene, size, camera: defaultCamera } = useThrelte()
 
   const xSizeSignal = signal(1)
   const ySizeSignal = signal(1)
@@ -55,19 +55,21 @@
   })
 </script>
 
-<HierarchicalObject>
-  <T
-    is={group}
-    position.z={-distance}
+<T
+  is={group}
+  position.z={-distance}
+  attach={({ ref }) => {
+    scene.add(group)
+    return () => scene.remove(group)
+  }}
+>
+  <Root
+    bind:ref
+    {...$$restProps}
+    sizeX={xSizeSignal}
+    sizeY={ySizeSignal}
+    pixelSize={pixelSizeSignal}
   >
-    <Root
-      bind:ref
-      {...$$restProps}
-      sizeX={xSizeSignal}
-      sizeY={ySizeSignal}
-      pixelSize={pixelSizeSignal}
-    >
-      <slot />
-    </Root>
-  </T>
-</HierarchicalObject>
+    <slot />
+  </Root>
+</T>
