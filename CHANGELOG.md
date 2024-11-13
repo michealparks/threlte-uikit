@@ -1,5 +1,11 @@
 # temp
 
+## 0.5.0
+
+### Minor Changes
+
+- 57ab60d: Bump UIKit to 0.8.4, remove HierarchicalObject usage
+
 ## 0.4.3
 
 ### Patch Changes
