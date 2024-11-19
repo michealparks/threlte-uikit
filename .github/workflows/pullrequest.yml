@@ -37,9 +37,10 @@ jobs:
           node-version: 20
 
       - name: Install 🔧
-        run:
-          - npm ci
-          - npx playwright install chromium --with-deps
+        run: npm ci
+
+      - name: Install playwright 🔧
+        run: npx playwright install chromium --with-deps
 
       - name: Test 🔬
         run: npm run test
