@@ -5,16 +5,11 @@ import { threlteTesting } from '@threlte/test/vite'
 export default defineConfig({
   plugins: [sveltekit(), threlteTesting()],
   test: {
-    setupFiles: ['./vitest.setup.ts'],
     include: ['src/**/*.{test,spec}.{js,ts}'],
-    environment: 'jsdom',
-    server: {
-      deps: {
-        inline: ['@preact/signals-core', '@pmndrs/uikit', 'vitest-canvas-mock'],
-      },
+    browser: {
+      provider: 'playwright', // or 'webdriverio'
+      enabled: true,
+      name: 'chromium', // browser name is required
     },
-  },
-  ssr: {
-    noExternal: ['@preact/signals-core', '@pmndrs/uikit'],
   },
 })
