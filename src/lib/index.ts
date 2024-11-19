@@ -12,7 +12,6 @@ export {
   type MaterialClass,
   type ScrollListeners,
   type LayoutListeners,
-  type ViewportListeners,
   type Listeners,
   type AllOptionalProperties,
   type ColorRepresentation,

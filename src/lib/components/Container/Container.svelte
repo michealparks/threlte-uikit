@@ -2,9 +2,9 @@
   import { Group } from 'three'
   import { T, currentWritable } from '@threlte/core'
   import { type ContainerProperties, createContainer } from '@pmndrs/uikit/internals'
-  import { createParent, useParent } from '$lib/useParent'
-  import { usePropertySignals } from '$lib/usePropSignals'
-  import { useInternals, type ContainerRef } from '$lib/useInternals'
+  import { createParent, useParent } from '../../useParent'
+  import { usePropertySignals } from '../../usePropSignals'
+  import { useInternals, type ContainerRef } from '../../useInternals'
   import AddHandlers from '../AddHandlers.svelte'
   import type { Props } from './Container.svelte'
 

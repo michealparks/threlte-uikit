@@ -1,7 +1,8 @@
 <svelte:options accessors />
 
 <script>
-  import { Container, Root } from '$lib'
+  import Container from '../Container/Container.svelte'
+  import Root from '../Root/Root.svelte'
 
   export let ref
 </script>

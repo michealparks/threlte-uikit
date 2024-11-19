@@ -1,7 +1,4 @@
 <script lang="ts">
-  import { Group } from 'three'
-  import { T, useThrelte, useTask, currentWritable } from '@threlte/core'
-  import { type Signal, computed, signal } from '@preact/signals-core'
   import {
     DEFAULT_PIXEL_SIZE,
     type RootProperties,
@@ -9,6 +6,10 @@
     readReactive,
     reversePainterSortStable,
   } from '@pmndrs/uikit/internals'
+  import { Group } from 'three'
+  import { T, useThrelte, useTask, currentWritable } from '@threlte/core'
+  import { type Signal, computed, signal } from '@preact/signals-core'
+
   import { createParent } from '$lib/useParent'
   import { usePropertySignals } from '$lib/usePropSignals'
   import { useInternals } from '$lib/useInternals'
