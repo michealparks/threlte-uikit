@@ -1,5 +1,11 @@
 # temp
 
+## 0.5.1
+
+### Patch Changes
+
+- a14de74: Add missing dependencies and package meta
+
 ## 0.5.0
 
 ### Minor Changes
