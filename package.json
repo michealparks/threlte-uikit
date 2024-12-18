@@ -3,6 +3,14 @@
   "version": "0.5.0",
   "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michealparks/threlte-uikit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/michealparks/threlte-uikit/issues"
+  },
+  "homepage": "https://github.com/michealparks/threlte-uikit#readme",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build && npm run package",
@@ -29,11 +37,13 @@
     "!dist/**/*.spec.*"
   ],
   "dependencies": {
-    "@pmndrs/uikit": "^0.8.4"
+    "@pmndrs/uikit": "^0.8.4",
+    "@preact/signals-core": "^1.5.1"
   },
   "peerDependencies": {
     "@threlte/core": ">=7",
-    "svelte": ">=4"
+    "svelte": ">=4",
+    "three": ">=0.160"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.9",
