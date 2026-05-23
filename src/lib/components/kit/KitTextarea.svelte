@@ -39,7 +39,12 @@
 <T
   bind:ref
   is={component}
-  {...handlers.current}
+  oncontextmenu={handlers.current.oncontextmenu}
+  ondblclick={handlers.current.ondblclick}
+  onpointerenter={handlers.current.onpointerenter}
+  onpointerout={handlers.current.onpointerout}
+  onpointerover={handlers.current.onpointerover}
+  onwheel={handlers.current.onwheel}
   onclick={() => component.input.focus()}
   onpointerdown={(event) => forward('pointerdown', event)}
   onpointermove={(event) => forward('pointermove', event)}
