@@ -37,10 +37,31 @@
 <T
   bind:ref
   is={component}
-  {...handlers.current}
-  onpointerdown={(event) => forwardPointer('pointerdown', event)}
-  onpointermove={(event) => forwardPointer('pointermove', event)}
-  onpointerup={(event) => forwardPointer('pointerup', event)}
-  onpointerleave={(event) => forwardPointer('pointerleave', event)}
-  onpointercancel={(event) => forwardPointer('pointercancel', event)}
+  onclick={handlers.current.onclick}
+  oncontextmenu={handlers.current.oncontextmenu}
+  ondblclick={handlers.current.ondblclick}
+  onpointerenter={handlers.current.onpointerenter}
+  onpointerout={handlers.current.onpointerout}
+  onpointerover={handlers.current.onpointerover}
+  onwheel={handlers.current.onwheel}
+  onpointerdown={(event) => {
+    handlers.current.onpointerdown?.(event)
+    forwardPointer('pointerdown', event)
+  }}
+  onpointermove={(event) => {
+    handlers.current.onpointermove?.(event)
+    forwardPointer('pointermove', event)
+  }}
+  onpointerup={(event) => {
+    handlers.current.onpointerup?.(event)
+    forwardPointer('pointerup', event)
+  }}
+  onpointerleave={(event) => {
+    handlers.current.onpointerleave?.(event)
+    forwardPointer('pointerleave', event)
+  }}
+  onpointercancel={(event) => {
+    handlers.current.onpointercancel?.(event)
+    forwardPointer('pointercancel', event)
+  }}
 />

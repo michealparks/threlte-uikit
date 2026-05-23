@@ -42,7 +42,15 @@
 <T
   bind:ref
   is={component}
-  {...handlers.current}
+  onclick={handlers.current.onclick}
+  oncontextmenu={handlers.current.oncontextmenu}
+  ondblclick={handlers.current.ondblclick}
+  onpointercancel={handlers.current.onpointercancel}
+  onpointerenter={handlers.current.onpointerenter}
+  onpointerleave={handlers.current.onpointerleave}
+  onpointerout={handlers.current.onpointerout}
+  onpointerover={handlers.current.onpointerover}
+  onwheel={handlers.current.onwheel}
   onpointerdown={(event) => forward('pointerdown', event)}
   onpointermove={(event) => forward('pointermove', event)}
   onpointerup={(event) => forward('pointerup', event)}

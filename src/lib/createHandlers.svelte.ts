@@ -3,7 +3,26 @@ import type { ReadonlySignal } from '@preact/signals-core'
 
 import { fromStore } from 'svelte/store'
 
-const uikitToSvelteKeys: Array<[keyof EventHandlersProperties, string]> = [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type WrappedHandler = ((event: any) => void) | undefined
+
+type SvelteHandlerKey =
+  | 'onclick'
+  | 'oncontextmenu'
+  | 'ondblclick'
+  | 'onpointercancel'
+  | 'onpointerdown'
+  | 'onpointerenter'
+  | 'onpointerleave'
+  | 'onpointermove'
+  | 'onpointerout'
+  | 'onpointerover'
+  | 'onpointerup'
+  | 'onwheel'
+
+export type WrappedHandlers = Record<SvelteHandlerKey, WrappedHandler>
+
+const uikitToSvelteKeys: Array<[keyof EventHandlersProperties, SvelteHandlerKey]> = [
   ['onClick', 'onclick'],
   ['onContextMenu', 'oncontextmenu'],
   ['onDblClick', 'ondblclick'],
@@ -18,8 +37,12 @@ const uikitToSvelteKeys: Array<[keyof EventHandlersProperties, string]> = [
   ['onWheel', 'onwheel'],
 ]
 
-const disableKeys = new Set(['onpointerdown', 'onwheel'])
-const enableKeys = new Set(['onpointerup', 'onpointerleave', 'onpointercancel'])
+const disableKeys = new Set<SvelteHandlerKey>(['onpointerdown', 'onwheel'])
+const enableKeys = new Set<SvelteHandlerKey>([
+  'onpointerup',
+  'onpointerleave',
+  'onpointercancel',
+])
 
 export const createHandlers = (
   handlers: ReadonlySignal<EventHandlersProperties>,
@@ -28,8 +51,21 @@ export const createHandlers = (
 ) => {
   const reactiveHandlers = fromStore(handlers)
 
-  const allHandlers = $derived.by(() => {
-    const obj: Record<string, unknown> = {}
+  const allHandlers = $derived.by<WrappedHandlers>(() => {
+    const obj: WrappedHandlers = {
+      onclick: undefined,
+      oncontextmenu: undefined,
+      ondblclick: undefined,
+      onpointercancel: undefined,
+      onpointerdown: undefined,
+      onpointerenter: undefined,
+      onpointerleave: undefined,
+      onpointermove: undefined,
+      onpointerout: undefined,
+      onpointerover: undefined,
+      onpointerup: undefined,
+      onwheel: undefined,
+    }
     const h = reactiveHandlers.current
 
     for (const [uikitKey, svelteKey] of uikitToSvelteKeys) {
@@ -55,7 +91,7 @@ export const createHandlers = (
   })
 
   return {
-    get current() {
+    get current(): WrappedHandlers {
       return allHandlers
     },
   }
