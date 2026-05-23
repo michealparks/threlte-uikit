@@ -1,5 +1,11 @@
 # temp
 
+## 2.0.1
+
+### Patch Changes
+
+- 62226fc: Fix: event destructuring
+
 ## 2.0.0
 
 ### Major Changes

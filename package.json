@@ -2,7 +2,7 @@
   "name": "threlte-uikit",
   "license": "MIT",
   "description": "UI toolkit for Threlte, built on @pmndrs/uikit",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "type": "module",
   "packageManager": "pnpm@10.11.1",
   "keywords": [
